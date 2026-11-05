@@ -9,6 +9,7 @@ This repository adheres to [Semantic Versioning](https://semver.org/) paired wit
 
 ### Added
 - **Core Agent Conventions & Persona**: Universal instruction set in `AGENTS.md` and `.agents/rules/project-conventions.md` defining objective persona, analytical posture, no unverified assumptions, and mandatory user review checkpoints.
+- **Citizen Developer Onboarding & Prompt Recipes**: Restructured `README.md` with 3-minute quickstarts, collaborative pair-programming flow breakdown, everyday `./manage.sh` cheatsheet, and copy-paste prompt recipes.
 - **Persistent Memory Bank (`.agents/memory/`)**: Triad of agent-maintained files (`activeContext.md`, `systemPatterns.md`, `progress.md`) eliminating cross-session task amnesia.
 - **Negative Constraints & Anti-Pattern Defenses**: Strict rules in `AGENTS.md` prohibiting phantom refactoring, comment deletion, unvetted external dependencies, and unbounded tool usage.
 - **Glob-Scoped Modular Rules**: Extracted targeted rules for shell scripting (`shell-scripting.md`) and container manifests (`containers-and-env.md`).
