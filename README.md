@@ -86,7 +86,7 @@ The harness enforces key operating invariants defined in [AGENTS.md](AGENTS.md):
 - **Negative Constraints**: Strictly no phantom refactoring outside task scope, no pruning existing code comments or docstrings, and no new unvetted external dependencies.
 - **Persistent Session Memory**: Session focus, idioms, and milestones are tracked in `.agents/memory/` across chats and compactions.
 - **Reproduction-First Bugfixes**: Defect fixes must include a reproducing test before or alongside implementation.
-- **Agile Trunk Dual-Tagging**: Substantive features receive SemVer tags (`vMAJOR.MINOR.PATCH`) paired with daily CalVer snapshots (`YYYY.M.D.N`) on `main`.
+- **Agile Trunk Dual-Tagging**: Substantive features receive SemVer tags (`vMAJOR.MINOR.PATCH`) paired with CalVer release tags (`YYYY.M.D.N`) on `main`.
 
 ---
 
