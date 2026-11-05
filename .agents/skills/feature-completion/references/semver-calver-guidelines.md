@@ -10,7 +10,7 @@ The repository tracks changes using a hybrid dual-versioning scheme tailored for
    - Used for primary capabilities, breaking changes, and public interface contracts.
 2. **Calendar Versioning (CalVer)**: `YYYY.M.D.N` (e.g. `2026.11.4.1`)
    - Identifies chronological snapshots, routine deployments, and configuration commits on `main`.
-   - Adheres to PEP 440 format (no leading zeros in month/day, daily monotonic sequence revision `.N`).
+   - Adheres to PEP 440 format (no leading zeros in month/day, monotonic sequence revision `.N` for same-day releases).
 
 ---
 
@@ -22,7 +22,7 @@ In agile trunk-based git, all feature branches merge directly into `main`. The `
 | :--- | :--- | :--- | :--- | :--- |
 | **Tier 1: Semantic Minor** | Completed feature branch merging to `main` with new capabilities. | Several times per sprint / continuous | **Dual Tag**: `vX.Y.0` + `YYYY.M.D.N` | **Mandatory**: Curated roll-up milestone entry. |
 | **Tier 2: Semantic Major** | Breaking contract changes, architectural redesigns, schema resets. | Infrequent / deliberate | **Dual Tag**: `vX.0.0` + `YYYY.M.D.N` | **Mandatory**: Migration guide & breaking notices. |
-| **Tier 3: Trunk Patch / Hotfix** | Routine bug fixes, configuration tweaks, or doc updates. | Daily / As needed | **CalVer-Only**: `YYYY.M.D.N` | **Deferred**: Rolled up into next Tier 1 SemVer release. |
+| **Tier 3: Trunk Patch / Hotfix** | Routine bug fixes, configuration tweaks, or doc updates. | As needed | **CalVer-Only**: `YYYY.M.D.N` | **Deferred**: Rolled up into next Tier 1 SemVer release. |
 
 ### Cadence Invariants:
 1. **Never Tag Intermediate Commits on Feature Branches**: Feature branch commits remain untagged. Tags are applied *only* on the merge commit on `main`.
