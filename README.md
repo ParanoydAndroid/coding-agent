@@ -1,8 +1,8 @@
-# Coding Agent: Universal Agentic Engineering Framework
+# Coding Agent
 
-`coding-agent` is a production-grade, modular framework for building software with AI coding assistants (such as Google Antigravity `agy`, Claude Code, Cursor, OpenAI Codex, ChatGPT, and GitHub Copilot).
+`coding-agent` is a small harness of rules, tests, and workflows for working with AI coding assistants (such as Google Antigravity `agy`, Claude Code, Cursor, OpenAI Codex, ChatGPT, or GitHub Copilot).
 
-Whether you are a **citizen developer** building your first internal tool or an **experienced systems architect** managing complex services, this harness provides the guardrails, automated testing, and disciplined workflows to keep your project clean, secure, and reproducible.
+Whether you are building your first small project or managing existing services, this harness provides basic guardrails, sanity testing, and structured workflows to help keep the code organized and reproducible.
 
 ---
 
@@ -147,6 +147,7 @@ coding-agent/
 ├── .env.example                                         # Configuration template
 ├── .gitignore                                           # Standard ignore rules
 ├── CHANGELOG.md                                         # Release history
+├── LICENSE                                              # Mozilla Public License 2.0
 └── README.md                                            # Project overview
 ```
 
@@ -167,3 +168,9 @@ All operational runbooks adhere to **progressive disclosure** under `.agents/ski
 | **`codebase-audit`** | Detects drift between declarative source code and live runtime state, including container digests, env skew, permissions, and port exposure. |
 | **`system-diagnostics`** | Step-by-step diagnostic triage flowchart for troubleshooting ingress routing, process runtime health, network/DNS, and database locks. |
 | **`data-safety`** | Runbook for pre-mutation safety snapshots, zero-downtime online database dumps, and isolated sandbox disaster recovery drills. |
+
+---
+
+## 8. License
+
+This project is licensed under the Mozilla Public License 2.0 (MPL-2.0). See [LICENSE](LICENSE) for details.

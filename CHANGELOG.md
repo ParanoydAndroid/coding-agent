@@ -8,6 +8,8 @@ This repository adheres to [Semantic Versioning](https://semver.org/) paired wit
 ## [1.0.0] / [2026.11.4.1] - Initial Release of Universal Coding Agent Framework (2026-11-04)
 
 ### Added
+- **Mozilla Public License 2.0 (`LICENSE`)**: File-level copyleft license ensuring harness improvements remain open-source while permitting unencumbered use on managed codebases.
+- **Prose Modesty & Anti-Hyperbole Rules**: Explicit behavioral and documentation constraints in `AGENTS.md` barring promotional buzzwords and self-aggrandizing hype in favor of direct, understated language.
 - **Core Agent Conventions & Persona**: Universal instruction set in `AGENTS.md` and `.agents/rules/project-conventions.md` defining objective persona, analytical posture, no unverified assumptions, and mandatory user review checkpoints.
 - **Citizen Developer Onboarding & Prompt Recipes**: Restructured `README.md` with 3-minute quickstarts, collaborative pair-programming flow breakdown, everyday `./manage.sh` cheatsheet, and copy-paste prompt recipes.
 - **Persistent Memory Bank (`.agents/memory/`)**: Triad of agent-maintained files (`activeContext.md`, `systemPatterns.md`, `progress.md`) eliminating cross-session task amnesia.
