@@ -80,6 +80,7 @@ cmd_setup() {
     "${REPO_DIR}/backups"
     "${REPO_DIR}/.agents/artifacts"
     "${REPO_DIR}/.agents/subagents"
+    "${REPO_DIR}/.agents/memory"
   )
   for dir in "${required_dirs[@]}"; do
     if [[ ! -d "${dir}" ]]; then

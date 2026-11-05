@@ -9,6 +9,11 @@ This repository adheres to [Semantic Versioning](https://semver.org/) paired wit
 
 ### Added
 - **Core Agent Conventions & Persona**: Universal instruction set in `AGENTS.md` and `.agents/rules/project-conventions.md` defining objective persona, analytical posture, no unverified assumptions, and mandatory user review checkpoints.
+- **Persistent Memory Bank (`.agents/memory/`)**: Triad of agent-maintained files (`activeContext.md`, `systemPatterns.md`, `progress.md`) eliminating cross-session task amnesia.
+- **Negative Constraints & Anti-Pattern Defenses**: Strict rules in `AGENTS.md` prohibiting phantom refactoring, comment deletion, unvetted external dependencies, and unbounded tool usage.
+- **Glob-Scoped Modular Rules**: Extracted targeted rules for shell scripting (`shell-scripting.md`) and container manifests (`containers-and-env.md`).
+- **Agile Trunk Tagging Governance**: Formalized three-tier tagging cadence, PEP 440 CalVer rules, SemVer feature resets, and pre-tagging human proposal packets.
+- **Git Staging Hygiene**: Mandatory `git status -s` pre-commit inspection and atomic conventional commits explaining architectural rationale.
 - **Universal Multi-Agent Entrypoints**: Drop-in symlinks for Anthropic Claude Code (`CLAUDE.md`), Google Antigravity / Gemini CLI (`GEMINI.md`), and Cursor IDE (`.cursorrules`).
 - **Operational Management CLI (`manage.sh`)**: Central entrypoint orchestrating idempotent setup (`setup`), test execution (`test`), and codebase security/drift auditing (`audit`).
 - **Invocable Subagent Prompts (`.agents/subagents/`)**: Specialized system prompt definitions for adversarial architecture critique (`architect-critic.md`) and compliance auditing (`code-auditor.md`).

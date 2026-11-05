@@ -16,6 +16,11 @@ This file serves as the primary entrypoint and instruction set for agents instan
   - Recommend and apply established best practices for software architecture, declarative infrastructure, and clean code.
   - Work iteratively with the user to refine requirements, schemas, and designs before executing changes.
 - **No Unverified Assumptions**: Do not invent processes, paths, or procedures. When requirements or existing codebases are ambiguous or contradictory, stop and ask targeted clarifying questions.
+- **Negative Constraints & Anti-Pattern Defenses**:
+  - *No Phantom Refactoring*: Never modify, reformat, or re-architect code, manifests, or files outside the approved feature plan scope.
+  - *Preserve Documentation Integrity*: Never delete, prune, or reword existing docstrings, code comments, or license notices that are unrelated to your immediate task.
+  - *Strict Dependency Gate*: Never introduce new external packages, libraries, or toolchain dependencies without explicit user justification and approval. Prefer language standard libraries and existing dependencies.
+  - *Tool & Token Economy*: Avoid unbounded recursive commands (e.g. `ls -R`, unconstrained `find /`, recursive `grep`) that saturate context windows. Use targeted commands (`git status -s`, scoped search).
 - **Mandatory User Review Gate Before Feature Completion**: After executing an approved feature plan and committing intermediate implementation changes on the feature branch, NEVER proceed autonomously into `feature-completion` (documentation audit, changelog entry, artifact cleanup, merge to `main`, or tagging). ALWAYS pause, present a concise summary of the current state, runtime behavior, and test results, and explicitly ask for user review and approval before proceeding.
 - **Pre-Execution Overview for Ad-Hoc Scripts**: Whenever authoring an ad-hoc or temporary script (e.g., in `/tmp/` or the workspace) and requesting user approval to execute it (`BypassSandbox: true`), provide a concise operational overview explaining what the script does, the key commands/queries/mutations it performs, and any state it modifies before or alongside requesting execution permission. Skip trivial syntax details and focus on overall operations and key behavioral elements so the user can make an informed approval decision without reading the raw script file first.
 - **Client Artifact and Export Delivery**: When authoring or exporting artifacts, generated bundles, or data archives that the user needs to inspect or transfer to other devices, place them in a dedicated staging path (e.g. `dist/`, `build/`, or an agreed exports directory), set standard read permissions (`chmod 644`), and document the exact retrieval command or path.
@@ -26,8 +31,10 @@ When newly instantiated against any repository, orient yourself using the follow
 
 1. **`README.md`**: The authoritative reference for project purpose, repository structure, prerequisite runtimes, service interfaces, configuration paths, and core CLI commands.
 2. **`AGENTS.md` / `agent.md` (`.agents/rules/project-conventions.md`)**: Canonical behavioral instructions, engineering standards, and coding conventions. The root symlink ensures universal compatibility across multi-agent tooling.
-3. **`.agents/artifacts/`**: Versioned directory for architecture specifications, design documents, and technical audits (see [`.agents/artifacts/architecture.md`](.agents/artifacts/architecture.md)). Read existing artifacts before proposing or executing work.
-4. **Configuration & Dependency Manifests**: Package manifests (`package.json`, `Cargo.toml`, `pyproject.toml`, `go.mod`, `compose.yml`) and configuration templates (`.env.example`).
+3. **`.agents/memory/`**: Persistent session memory bank (`activeContext.md`, `systemPatterns.md`, `progress.md`) maintaining task focus, architectural quirks, and milestones across session boundaries and context compactions.
+4. **`.agents/rules/`**: Glob-scoped language and manifest conventions (e.g. `shell-scripting.md` for `*.sh`, `containers-and-env.md` for `compose.yml`).
+5. **`.agents/artifacts/`**: Versioned directory for architecture specifications, design documents, and technical audits (see [`.agents/artifacts/architecture.md`](.agents/artifacts/architecture.md)). Read existing artifacts before proposing or executing work.
+6. **Configuration & Dependency Manifests**: Package manifests (`package.json`, `Cargo.toml`, `pyproject.toml`, `go.mod`, `compose.yml`) and configuration templates (`.env.example`).
 
 **Initial Project Direction & Fresh Repository Onboarding**:
 When interacting with a user on a freshly cloned repository, or when establishing initial project direction and adapting the project to user-specific hardware, platform, or cloud constraints, invoke and follow the `start-project` skill ([`.skills/start-project/SKILL.md`](.agents/skills/start-project/SKILL.md)). This skill guides interactive needs assessment, component selection, constraint handling, adaptation planning, and initial verified deployment.
@@ -71,6 +78,10 @@ When interacting with a user on a freshly cloned repository, or when establishin
   - Adhere strictly to the established language-specific formatting and linting conventions of the repository.
   - Keep functions focused and cohesive. Favor modular, composable functions over monolithic procedures.
   - Handle errors explicitly and defensively. Never suppress or ignore unexpected exceptions without explicit justification.
+- **Git Staging Hygiene and Atomic Commit Discipline**:
+  - *Never Stage Blindly*: Never execute `git add .` or `git add -A` without first inspecting `git status -s` to verify no scratch files, secrets, or untracked artifacts are staged.
+  - *Atomic Commits*: Each commit must encapsulate exactly one cohesive logical change.
+  - *Conventional Commit Syntax*: Use standard conventional commit types (`feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`). Include a descriptive body explaining *why* the architectural change was made when non-obvious.
 - **Shell Scripting Conventions**:
   - Use `#!/usr/bin/env bash` with strict error handling: `set -euo pipefail`.
   - Quote all variable expansions (`"${VAR}"`) to prevent word splitting and globbing issues.

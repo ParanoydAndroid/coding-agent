@@ -7,14 +7,16 @@
 ## 1. Core Engineering Principles
 
 - **Objective, Matter-of-Fact Persona**: Concise, direct, and uncomplimentary. Zero sycophancy or conversational filler.
+- **Negative Constraints & Anti-Pattern Defenses**: Zero phantom refactoring outside plan scope, preservation of existing comments/docstrings, strict third-party dependency gating, and tool/token economy.
 - **Adversarial "Grill-Me" Design Review**: Challenges assumptions, critiques premature optimization, and eliminates bespoke glue code in favor of declarative, standard solutions.
 - **Mandatory User Review Gate**: After executing a plan and making intermediate implementation commits, agents must pause and solicit explicit user review and approval before touching release notes, merging, or tagging.
+- **Persistent Memory Bank**: Agent-maintained session state in `.agents/memory/` (`activeContext.md`, `systemPatterns.md`, `progress.md`) to eliminate cross-session task amnesia.
 - **Pre-Execution Script Overviews**: Authoring or executing ad-hoc scripts requires providing a concise operational summary of commands, state mutations, and behavioral impact before execution.
 - **Declarative Configuration & Universal Idempotency**: Declarative configuration takes absolute precedence over imperative state manipulation. All setup, build, migration, provisioning, and teardown scripts must be strictly idempotent without failing on existing entities.
 - **Pragmatic State Convergence**: Maintain a single idempotent convergence command (`setup`), rely on native runtime self-healing (`restart: unless-stopped` + health checks), and use simple host timers/cron for periodic maintenance.
 - **Two-Tier Secret & Configuration Model**: Committed `.env.example` templates define all variables with strict assertion syntax (`${VAR:?...}`); real secrets remain untracked in `.env`.
 - **Inviolability of Existing Tests**: Tests are never weakened or removed to make a broken build pass. Bug fixes must be accompanied by reproducing regression tests.
-- **Curated Changelog Roll-Ups**: User- and deployer-focused release notes synthesizing intermediate commits into clear milestone summaries under SemVer and CalVer.
+- **Agile Trunk Tagging Governance**: Curated SemVer releases (`vMAJOR.MINOR.PATCH`) for substantive features paired with daily CalVer snapshots (`YYYY.M.D.N`) on `main` following strict human approval gates.
 
 ---
 
@@ -30,8 +32,14 @@ coding-agent/
 ├── .skills -> .agents/skills                            # Skills directory symlink
 ├── manage.sh                                            # Central operational CLI (setup, test, audit)
 ├── .agents/
+│   ├── memory/                                          # Persistent session memory bank
+│   │   ├── activeContext.md                             # Current task focus, decisions, next steps
+│   │   ├── systemPatterns.md                            # Architecture patterns & idioms
+│   │   └── progress.md                                  # Milestones & verification status
 │   ├── rules/
-│   │   └── project-conventions.md -> ../../AGENTS.md    # Rules discovery symlink
+│   │   ├── project-conventions.md -> ../../AGENTS.md    # Universal rules discovery symlink
+│   │   ├── shell-scripting.md                           # Glob-scoped rules (*.sh)
+│   │   └── containers-and-env.md                        # Glob-scoped rules (compose.yml, .env)
 │   ├── subagents/                                       # Multi-agent role prompt definitions
 │   │   ├── architect-critic.md                          # Adversarial "grill-me" reviewer
 │   │   └── code-auditor.md                              # Drift & compliance auditor

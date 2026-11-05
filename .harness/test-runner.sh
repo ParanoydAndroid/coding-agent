@@ -285,6 +285,17 @@ test_subagents_presence() {
   [[ -d "${REPO_DIR}/.agents/subagents" ]]
 }
 
+test_memory_bank_presence() {
+  [[ -f "${REPO_DIR}/.agents/memory/activeContext.md" ]] && \
+  [[ -f "${REPO_DIR}/.agents/memory/systemPatterns.md" ]] && \
+  [[ -f "${REPO_DIR}/.agents/memory/progress.md" ]]
+}
+
+test_modular_rules_presence() {
+  [[ -f "${REPO_DIR}/.agents/rules/shell-scripting.md" ]] && \
+  [[ -f "${REPO_DIR}/.agents/rules/containers-and-env.md" ]]
+}
+
 suite_conventions() {
   init_suite "Project Conventions and Agent Structure"
   run_test test_conventions_entrypoint "AGENTS.md canonical entrypoint exists"
@@ -294,6 +305,8 @@ suite_conventions() {
   run_test test_env_example_presence ".env.example template exists"
   run_test test_gitignore_secrets ".gitignore protects .env secrets"
   run_test test_subagents_presence ".agents/subagents/ prompt directory exists"
+  run_test test_memory_bank_presence ".agents/memory/ session memory bank exists"
+  run_test test_modular_rules_presence ".agents/rules/ glob-scoped rules exist"
 }
 
 # ------------------------------------------------------------------------------

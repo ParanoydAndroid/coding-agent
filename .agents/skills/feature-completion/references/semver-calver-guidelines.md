@@ -1,44 +1,66 @@
-# SemVer and CalVer Release Guidelines
+# SemVer and CalVer Release Guidelines (Agile Trunk Governance)
 
-## Versioning Model Overview
+## 1. Versioning Model Overview
 
-The repository tracks changes using a hybrid dual-versioning scheme:
+The repository tracks changes using a hybrid dual-versioning scheme tailored for **Agile Trunk-Based Development**:
+
 1. **Semantic Versioning (SemVer)**: `vMAJOR.MINOR.PATCH` (e.g. `v1.2.0`)
    - Identifies functional and architectural milestones.
-   - Used for primary software releases, major capability introductions, and breaking changes.
+   - Always prefixed with a lower-case `v` to distinguish software releases from CalVer.
+   - Used for primary capabilities, breaking changes, and public interface contracts.
 2. **Calendar Versioning (CalVer)**: `YYYY.M.D.N` (e.g. `2026.11.4.1`)
-   - Identifies chronological snapshots, routine backups, and configuration commits on `main`.
+   - Identifies chronological snapshots, routine deployments, and configuration commits on `main`.
+   - Adheres to PEP 440 format (no leading zeros in month/day, daily monotonic sequence revision `.N`).
 
 ---
 
-## Release Versioning Tiers
+## 2. Tagging Cadence in Agile Trunk Development
 
-When completing work on a branch, classify the change into one of the following tiers:
+In agile trunk-based git, all feature branches merge directly into `main`. The `main` branch is always in a releasable state.
 
-1. **Semantic Major (`semver-major`)**:
-   - Breaking changes to public interfaces, repository layout, data schemas, or incompatible CLI/API redesigns.
-   - Requires user confirmation, full test suite pass, and curated `CHANGELOG.md` entry.
+| Release Tier | Trigger Event | Cadence | Tagging Action | Changelog Requirement |
+| :--- | :--- | :--- | :--- | :--- |
+| **Tier 1: Semantic Minor** | Completed feature branch merging to `main` with new capabilities. | Several times per sprint / continuous | **Dual Tag**: `vX.Y.0` + `YYYY.M.D.N` | **Mandatory**: Curated roll-up milestone entry. |
+| **Tier 2: Semantic Major** | Breaking contract changes, architectural redesigns, schema resets. | Infrequent / deliberate | **Dual Tag**: `vX.0.0` + `YYYY.M.D.N` | **Mandatory**: Migration guide & breaking notices. |
+| **Tier 3: Trunk Patch / Hotfix** | Routine bug fixes, configuration tweaks, or doc updates. | Daily / As needed | **CalVer-Only**: `YYYY.M.D.N` | **Deferred**: Rolled up into next Tier 1 SemVer release. |
 
-2. **Semantic Minor (`semver-minor`)**:
-   - Substantive feature completions automatically qualify for a minor version bump (e.g., adding a new service, integrating a major module, adding an automated subsystem).
-   - Critical or major security remediations that alter access models or introduce significant defense-in-depth layers.
-   - Requires curated `CHANGELOG.md` entry.
-
-3. **Semantic Patch / CalVer-Only (`semver-patch` / CalVer)**:
-   - Routine bug fixes, minor documentation corrections, micro-patches, and syntax tweaks.
-   - These do **NOT** generate standalone semantic minor bumps or individual changelog entries.
-   - Merged to `main` under CalVer tracking.
-
-4. **Tier Ambiguity**:
-   - If the agent cannot confidently determine whether changes qualify for major, minor, or patch, it must present its analysis, recommend a version tier, and explicitly ask the user for confirmation before updating the changelog or tagging.
+### Cadence Invariants:
+1. **Never Tag Intermediate Commits on Feature Branches**: Feature branch commits remain untagged. Tags are applied *only* on the merge commit on `main`.
+2. **Annotated Tags Only**: All tags must be created as annotated tags (`git tag -a <tag> -m "<message>"`) to preserve tagger identity, timestamp, and message for `git describe`.
 
 ---
 
-## Roll-Up Release Synthesis
+### 3. Pre-Tagging Proposal Checklist & Approval Gate
+
+The agent must **NEVER** apply a tag autonomously. Before executing any tagging operation on `main`, the agent must present the **Tagging Proposal Packet** to the user and wait for explicit confirmation:
+
+```text
+[ Pre-Tagging Proposal Packet ]
+1. Test Verification:
+   All regression suites passed (./manage.sh test all) with 0 failures.
+
+2. Commit Roll-Up Analysis:
+   List of commits on main since last SemVer tag:
+   - <commit_sha> <commit_message>
+
+3. Version Tier Recommendation:
+   "Recommend semver-minor (v1.1.0) paired with CalVer 2026.11.4.1
+    Reason: Adds new capability without breaking existing contracts."
+
+4. Changelog Preview:
+   Drafted CHANGELOG.md entry categorizing Added, Changed, Fixed, and Security items.
+```
+
+**Human Decision Gate**:
+The user must explicitly approve or adjust the recommended version tier before the agent commits `CHANGELOG.md`, merges to `main`, and tags.
+
+---
+
+## 4. Roll-Up Release Synthesis
 
 Each `CHANGELOG.md` entry must provide a high-level overview of **ALL** changes across the codebase since the previous changelog entry.
 
-Because multiple routine patches, bug fixes, and CalVer commits may accumulate on `main` between minor feature releases:
+Because multiple routine patches, bug fixes, and CalVer commits accumulate on `main` between minor feature releases:
 - The changelog entry for a new SemVer release must roll up and synthesize those intermediate commits alongside the new feature.
 - Aggregate changes into curated, meaningful bullet points categorized under `Added`, `Changed`, `Fixed`, and `Security`.
 - **Deployer-Focused Brevity & Scope**:
@@ -49,7 +71,7 @@ Because multiple routine patches, bug fixes, and CalVer commits may accumulate o
 
 ---
 
-## Changelog Entry Format Example
+## 5. Changelog Entry Format Example
 
 ```markdown
 ## [1.2.0] / [2026.11.4.1] - Dedicated Background Worker & Event Queue (2026-11-04)
