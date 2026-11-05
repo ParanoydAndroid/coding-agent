@@ -6,32 +6,24 @@ Whether you are building your first small project or managing existing services,
 
 ---
 
-## 1. Quickstart (3 Minutes)
+## 1. Quickstart
 
-### Option A: Start a Brand-New Project
+### Start a New Project
 ```bash
-# 1. Clone or copy this framework into your new project directory
 git clone <repo-url> my-project
 cd my-project
-
-# 2. Run the one-command setup (creates .env, builds directories, sets permissions)
 ./manage.sh setup
-
-# 3. Verify that all baseline safety checks pass
 ./manage.sh test all
 ```
 
-### Option B: Add to an Existing Project
+### Add to an Existing Project
 ```bash
-# Copy the core harness files into your existing project root:
 cp -r /path/to/coding-agent/{AGENTS.md,manage.sh,.agents/,.harness/,.skills,CLAUDE.md,GEMINI.md,.cursorrules,agent.md} ./
-
-# Run setup to converge your environment:
 ./manage.sh setup
 ./manage.sh test all
 ```
 
-Now open your project in your AI coding assistant (Antigravity, Cursor, Claude Code, or VS Code) and start building!
+Then open your project in your AI coding assistant (Antigravity, Cursor, Claude Code, or VS Code) and start building.
 
 ---
 
@@ -86,64 +78,39 @@ The `./manage.sh` script is your primary control center for running the project:
 
 ---
 
-## 5. Core Engineering Principles & Guardrails
+## 5. Core Guardrails
 
-For engineers, maintainers, and autonomous agents, the harness enforces non-negotiable architectural standards:
+The harness enforces key operating invariants defined in [AGENTS.md](AGENTS.md):
 
-- **Objective, Matter-of-Fact Persona**: Direct, concise, and uncomplimentary. Zero conversational fluff or sycophancy.
-- **Negative Constraints & Anti-Pattern Defenses**:
-  - *No Phantom Refactoring*: Never modify or re-style code outside the approved feature plan.
-  - *Preserve Documentation Integrity*: Never delete or prune unrelated comments, docstrings, or licenses.
-  - *Strict Dependency Gate*: Never import new third-party libraries without explicit user justification and approval.
-  - *Tool & Token Economy*: Avoid unbounded recursive shell commands (`ls -R`, unconstrained search).
-- **Persistent Session Memory Bank**: Agent-maintained state in `.agents/memory/` (`activeContext.md`, `systemPatterns.md`, `progress.md`) prevents task amnesia across long sessions and chat compactions.
-- **Two-Tier Secret & Configuration Model**: Committed `.env.example` templates define all variables with strict assertion syntax (`${VAR:?error}`); real secrets remain untracked in `.env`.
-- **Inviolability of Existing Tests**: Tests are never weakened or removed to force a passing build. Bug fixes must be paired with reproducing regression tests.
-- **Declarative & Idempotent Automation**: All setup and provisioning routines must produce the exact same desired target state when run repeatedly.
-- **Agile Trunk Tagging Governance**: Curated SemVer releases (`vMAJOR.MINOR.PATCH`) for substantive features paired with daily CalVer snapshots (`YYYY.M.D.N`) on `main` following strict human approval gates.
+- **Mandatory Review Gate**: The agent pauses after drafting plans and writing code; nothing is merged to `main` without human approval.
+- **Negative Constraints**: Strictly no phantom refactoring outside task scope, no pruning existing code comments or docstrings, and no new unvetted external dependencies.
+- **Persistent Session Memory**: Session focus, idioms, and milestones are tracked in `.agents/memory/` across chats and compactions.
+- **Reproduction-First Bugfixes**: Defect fixes must include a reproducing test before or alongside implementation.
+- **Agile Trunk Dual-Tagging**: Substantive features receive SemVer tags (`vMAJOR.MINOR.PATCH`) paired with daily CalVer snapshots (`YYYY.M.D.N`) on `main`.
 
 ---
 
-## 6. Repository Layout & Multi-Agent Compatibility
+## 6. Repository Layout & Tool Compatibility
 
-The framework provides out-of-the-box entrypoints for all major AI coding assistants through root symlinks:
+Multi-agent entrypoints map to canonical conventions via root symlinks:
 
 ```text
 coding-agent/
-├── AGENTS.md                                            # Canonical root entrypoint (Universal standard)
+├── AGENTS.md                                            # Canonical conventions entrypoint
 ├── CLAUDE.md -> AGENTS.md                               # Anthropic Claude Code entrypoint
 ├── GEMINI.md -> AGENTS.md                               # Google Antigravity / Gemini CLI entrypoint
 ├── .cursorrules -> AGENTS.md                            # Cursor IDE entrypoint
 ├── agent.md -> AGENTS.md                                # Tooling compatibility alias
 ├── .skills -> .agents/skills                            # Skills directory symlink
-├── manage.sh                                            # Central operational CLI (setup, test, audit)
+├── manage.sh                                            # Operational CLI (setup, test, audit)
 ├── .agents/
 │   ├── memory/                                          # Persistent session memory bank
-│   │   ├── activeContext.md                             # Current task focus, decisions, next steps
-│   │   ├── systemPatterns.md                            # Architecture patterns & idioms
-│   │   └── progress.md                                  # Milestones & verification status
-│   ├── rules/
-│   │   ├── project-conventions.md -> ../../AGENTS.md    # Universal rules discovery symlink
-│   │   ├── shell-scripting.md                           # Glob-scoped rules (*.sh)
-│   │   └── containers-and-env.md                        # Glob-scoped rules (compose.yml, .env)
-│   ├── subagents/                                       # Multi-agent role prompt definitions
-│   │   ├── architect-critic.md                          # Adversarial "grill-me" reviewer
-│   │   └── code-auditor.md                              # Drift & compliance auditor
-│   ├── skills/                                          # Progressive-disclosure operational runbooks
-│   │   ├── start-project/                               # Interactive onboarding & adaptation
-│   │   ├── feature-initiation/                          # Branching, plan drafting, "grill-me"
-│   │   ├── feature-completion/                          # Test verification, doc audit, changelog, merge
-│   │   ├── component-authoring/                         # Canonical component structure & security
-│   │   ├── component-lifecycle/                         # 6-touchpoint provisioning & decommissioning
-│   │   ├── test-authoring/                              # Test suites, assertions, regression tests
-│   │   ├── codebase-audit/                              # Drift detection, env skew, permissions
-│   │   ├── system-diagnostics/                          # Multi-layer triage flowchart & isolation
-│   │   └── data-safety/                                 # Zero-downtime backups, drills, snapshots
-│   └── artifacts/
-│       ├── README.md                                    # Artifact lifecycle & retention rules
-│       └── architecture.md                              # Living system architecture specification
+│   ├── rules/                                           # Glob-scoped rules (*.sh, compose.yml)
+│   ├── subagents/                                       # Multi-agent role prompts (architect, auditor)
+│   ├── skills/                                          # Operational runbooks (see catalog below)
+│   └── artifacts/                                       # Architecture specs and plans
 ├── .harness/
-│   └── test-runner.sh                                   # Lightweight TAP/xUnit test harness
+│   └── test-runner.sh                                   # TAP/xUnit test harness
 ├── .env.example                                         # Configuration template
 ├── .gitignore                                           # Standard ignore rules
 ├── CHANGELOG.md                                         # Release history
