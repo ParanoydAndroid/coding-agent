@@ -17,6 +17,5 @@ Harness operational enhancements: GitHub Actions CI workflow, git hooks guarding
 - Agile Trunk Dual-Tagging model (SemVer + CalVer) with mandatory human review gates before releases.
 
 ## Immediate Next Steps
-1. Verify automated tests (10/10 assertions) and drift audit (`./manage.sh audit`).
-2. Review feature branch diff and pause at Mandatory Review Gate.
-3. Merge `feature/harness-enhancements` into `main` and push to remote origin.
+- Stand by for new feature requests, diagnostics, or architecture reviews.
+- When beginning a new task, follow `feature-initiation` and update this file with active focus.
