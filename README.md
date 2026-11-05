@@ -22,13 +22,20 @@
 
 ```text
 coding-agent/
-├── AGENTS.md -> .agents/rules/project-conventions.md   # Universal entrypoint
-├── agent.md -> AGENTS.md                                # Compatibility symlink
+├── AGENTS.md                                            # Canonical root entrypoint
+├── CLAUDE.md -> AGENTS.md                               # Anthropic Claude Code entrypoint
+├── GEMINI.md -> AGENTS.md                               # Google Antigravity / Gemini CLI entrypoint
+├── .cursorrules -> AGENTS.md                            # Cursor IDE entrypoint
+├── agent.md -> AGENTS.md                                # Compatibility alias
 ├── .skills -> .agents/skills                            # Skills directory symlink
+├── manage.sh                                            # Central operational CLI (setup, test, audit)
 ├── .agents/
 │   ├── rules/
-│   │   └── project-conventions.md                       # Canonical rules & persona
-│   ├── skills/                                          # Modular operational runbooks
+│   │   └── project-conventions.md -> ../../AGENTS.md    # Rules discovery symlink
+│   ├── subagents/                                       # Multi-agent role prompt definitions
+│   │   ├── architect-critic.md                          # Adversarial "grill-me" reviewer
+│   │   └── code-auditor.md                              # Drift & compliance auditor
+│   ├── skills/                                          # Progressive-disclosure operational runbooks
 │   │   ├── start-project/                               # Interactive onboarding & adaptation
 │   │   ├── feature-initiation/                          # Branching, plan drafting, "grill-me"
 │   │   ├── feature-completion/                          # Test verification, doc audit, changelog, merge
@@ -39,6 +46,7 @@ coding-agent/
 │   │   ├── system-diagnostics/                          # Multi-layer triage flowchart & isolation
 │   │   └── data-safety/                                 # Zero-downtime backups, drills, snapshots
 │   └── artifacts/
+│       ├── README.md                                    # Artifact lifecycle & retention rules
 │       └── architecture.md                              # Living system architecture specification
 ├── .harness/
 │   └── test-runner.sh                                   # Lightweight TAP/xUnit test harness
@@ -100,7 +108,9 @@ All operational playbooks and diagnostic algorithms follow **progressive disclos
 ## 5. Adopting in Any Repository
 
 To adopt this agentic setup in any existing or new project:
-1. Copy `.agents/`, `.harness/`, `AGENTS.md`, and `.skills` into the target repository root.
-2. Adapt `.agents/artifacts/architecture.md` to reflect your project's specific components and boundaries.
-3. Define your project's environment variables in `.env.example`.
-4. Ensure your agent is configured to read `AGENTS.md` as its primary instruction set.
+1. Copy `AGENTS.md`, `manage.sh`, `.agents/`, `.harness/`, and root symlinks into the target repository root.
+2. Run `./manage.sh setup` to idempotently converge directories, permissions, and templates.
+3. Adapt `.agents/artifacts/architecture.md` to reflect your project's specific components and boundaries.
+4. Define your project's environment variables in `.env.example`.
+5. Run `./manage.sh test all` to verify that the harness passes all baseline invariant checks.
+6. Ensure your agent is configured to read `AGENTS.md` (or `CLAUDE.md`, `GEMINI.md`, `.cursorrules`) as its primary instruction set.

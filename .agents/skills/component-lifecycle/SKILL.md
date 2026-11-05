@@ -27,6 +27,11 @@ This skill coordinates adding a new component/service or decommissioning an exis
 
 ---
 
+## Prerequisites
+- Reference [6-Touchpoint Architectural Checklist and Decommissioning Protocol](./references/touchpoints-checklist.md) for required artifacts and validation criteria.
+
+---
+
 ## Procedure A: Adding a New Component or Service
 
 ### Touchpoint 1: Component Specification

@@ -254,12 +254,23 @@ print_summary() {
 # ------------------------------------------------------------------------------
 # Built-In Baseline Project Invariant Suites
 # ------------------------------------------------------------------------------
-test_conventions_symlink() {
-  [[ -L "${REPO_DIR}/AGENTS.md" ]] || [[ -f "${REPO_DIR}/AGENTS.md" ]]
+test_conventions_entrypoint() {
+  [[ -f "${REPO_DIR}/AGENTS.md" ]]
 }
 
 test_skills_symlink() {
   [[ -L "${REPO_DIR}/.skills" ]] || [[ -d "${REPO_DIR}/.skills" ]]
+}
+
+test_ecosystem_symlinks() {
+  [[ -L "${REPO_DIR}/CLAUDE.md" || -f "${REPO_DIR}/CLAUDE.md" ]] && \
+  [[ -L "${REPO_DIR}/GEMINI.md" || -f "${REPO_DIR}/GEMINI.md" ]] && \
+  [[ -L "${REPO_DIR}/.cursorrules" || -f "${REPO_DIR}/.cursorrules" ]] && \
+  [[ -L "${REPO_DIR}/agent.md" || -f "${REPO_DIR}/agent.md" ]]
+}
+
+test_manage_executable() {
+  [[ -x "${REPO_DIR}/manage.sh" ]]
 }
 
 test_env_example_presence() {
@@ -270,12 +281,19 @@ test_gitignore_secrets() {
   grep -q "\.env" "${REPO_DIR}/.gitignore"
 }
 
+test_subagents_presence() {
+  [[ -d "${REPO_DIR}/.agents/subagents" ]]
+}
+
 suite_conventions() {
   init_suite "Project Conventions and Agent Structure"
-  run_test test_conventions_symlink "AGENTS.md entrypoint is available"
+  run_test test_conventions_entrypoint "AGENTS.md canonical entrypoint exists"
   run_test test_skills_symlink ".skills directory/symlink is available"
+  run_test test_ecosystem_symlinks "Multi-agent ecosystem entrypoints (CLAUDE.md, GEMINI.md, .cursorrules) exist"
+  run_test test_manage_executable "manage.sh operational entrypoint is executable"
   run_test test_env_example_presence ".env.example template exists"
   run_test test_gitignore_secrets ".gitignore protects .env secrets"
+  run_test test_subagents_presence ".agents/subagents/ prompt directory exists"
 }
 
 # ------------------------------------------------------------------------------

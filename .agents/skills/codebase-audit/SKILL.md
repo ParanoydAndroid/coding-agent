@@ -13,6 +13,11 @@ This skill provides a systematic diagnostic procedure to detect drift between tr
 
 ---
 
+## Prerequisites
+- Reference [Codebase Audit Inspection Commands & Severity Rules](./references/audit-rules.md) for diagnostic query patterns and punchlist classification criteria.
+
+---
+
 ## Audit Checklist & Procedures
 
 ### Audit Area 1: Service & Runtime Drift Detection

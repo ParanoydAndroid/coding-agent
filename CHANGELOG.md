@@ -9,6 +9,11 @@ This repository adheres to [Semantic Versioning](https://semver.org/) paired wit
 
 ### Added
 - **Core Agent Conventions & Persona**: Universal instruction set in `AGENTS.md` and `.agents/rules/project-conventions.md` defining objective persona, analytical posture, no unverified assumptions, and mandatory user review checkpoints.
+- **Universal Multi-Agent Entrypoints**: Drop-in symlinks for Anthropic Claude Code (`CLAUDE.md`), Google Antigravity / Gemini CLI (`GEMINI.md`), and Cursor IDE (`.cursorrules`).
+- **Operational Management CLI (`manage.sh`)**: Central entrypoint orchestrating idempotent setup (`setup`), test execution (`test`), and codebase security/drift auditing (`audit`).
+- **Invocable Subagent Prompts (`.agents/subagents/`)**: Specialized system prompt definitions for adversarial architecture critique (`architect-critic.md`) and compliance auditing (`code-auditor.md`).
+- **Artifact Lifecycle Specification**: Comprehensive lifecycle policy distinguishing persistent specifications from branch-bound ephemeral plans in `.agents/artifacts/README.md`.
+- **Progressive Disclosure References**: Added comprehensive reference checklists for component lifecycles (`touchpoints-checklist.md`) and codebase audits (`audit-rules.md`).
 - **Pragmatic State Convergence Standards**: Guidelines for single idempotent setup/convergence entrypoints, container self-healing, native systemd/cron periodic jobs, and boot convergence.
 - **Pre-Execution Script Review Rule**: Mandatory operational overview before requesting execution permission for ad-hoc or temporary scripts.
 - **Modular Skills Suite (`.agents/skills/`)**:
