@@ -121,8 +121,8 @@ cmd_setup() {
 
   # 4. Enforce standard secure permissions across repository files
   log_info "Normalizing filesystem permissions..."
-  find "${REPO_DIR}" -maxdepth 4 -type f -not -path "*/.git/*" -not -name "*.sh" -exec chmod 644 {} +
-  find "${REPO_DIR}" -maxdepth 4 -type f -name "*.sh" -exec chmod 755 {} +
+  find "${REPO_DIR}" -maxdepth 6 -type f -not -path "*/.git/*" -not -name "*.sh" -exec chmod 644 {} +
+  find "${REPO_DIR}" -maxdepth 6 -type f -name "*.sh" -exec chmod 755 {} +
   chmod 755 "${REPO_DIR}/manage.sh"
   if [[ -f "${REPO_DIR}/.env" ]]; then
     chmod 600 "${REPO_DIR}/.env"
@@ -172,7 +172,7 @@ cmd_audit() {
   # 1. Check for world-writable files
   log_info "Auditing filesystem permissions for world-writable files..."
   local ww_files
-  ww_files="$(find "${REPO_DIR}" -maxdepth 3 -type f -perm -002 -not -path "*/.git/*" 2>/dev/null || true)"
+  ww_files="$(find "${REPO_DIR}" -maxdepth 6 -type f -perm -002 -not -path "*/.git/*" 2>/dev/null || true)"
   if [[ -n "${ww_files}" ]]; then
     log_error "Dangerous world-writable files detected:"
     echo "${ww_files}" >&2
@@ -199,7 +199,7 @@ cmd_audit() {
   # 3. Check for broken symlinks
   log_info "Validating repository symlinks..."
   local broken_links
-  broken_links="$(find "${REPO_DIR}" -maxdepth 2 -xtype l -not -path "*/.git/*" 2>/dev/null || true)"
+  broken_links="$(find "${REPO_DIR}" -maxdepth 6 -xtype l -not -path "*/.git/*" 2>/dev/null || true)"
   if [[ -n "${broken_links}" ]]; then
     log_error "Broken symlinks detected:"
     echo "${broken_links}" >&2
