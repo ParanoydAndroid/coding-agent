@@ -135,6 +135,11 @@ cmd_setup() {
     log_success "Ensured .harness/test-runner.sh is executable"
   fi
 
+  # 6. Ensure git index tracks shell scripts as executable (100755)
+  if [[ -d "${REPO_DIR}/.git" ]]; then
+    git -C "${REPO_DIR}" update-index --chmod=+x manage.sh .harness/test-runner.sh 2>/dev/null || true
+  fi
+
   # 6. Install or converge git hooks guarding main
   if [[ -d "${REPO_DIR}/.git" ]]; then
     cmd_hook install >/dev/null 2>&1 || true

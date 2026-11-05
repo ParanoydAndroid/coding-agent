@@ -270,7 +270,8 @@ test_ecosystem_symlinks() {
 }
 
 test_manage_executable() {
-  [[ -x "${REPO_DIR}/manage.sh" ]]
+  [[ -x "${REPO_DIR}/manage.sh" ]] && \
+  (! git -C "${REPO_DIR}" rev-parse --is-inside-work-tree >/dev/null 2>&1 || git -C "${REPO_DIR}" ls-files -s manage.sh | grep -q "^100755")
 }
 
 test_env_example_presence() {
