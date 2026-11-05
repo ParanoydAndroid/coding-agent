@@ -1,0 +1,29 @@
+# Environment variables & secrets
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+
+# Runtime data & backups
+/data/
+/backups/
+/dist/
+/build/
+*.tar.gz
+*.bak
+
+# Temporary & drill sandbox directories
+/tmp/
+.dr-drill-*
+
+# Logs & caches
+*.log
+.cache/
+__pycache__/
+node_modules/
+target/
+
+# OS artifacts
+.DS_Store
+Thumbs.db
