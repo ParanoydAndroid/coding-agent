@@ -286,9 +286,13 @@ test_subagents_presence() {
 }
 
 test_memory_bank_presence() {
-  [[ -f "${REPO_DIR}/.agents/memory/activeContext.md" ]] && \
-  [[ -f "${REPO_DIR}/.agents/memory/systemPatterns.md" ]] && \
-  [[ -f "${REPO_DIR}/.agents/memory/progress.md" ]]
+  [[ -s "${REPO_DIR}/.agents/memory/activeContext.md" ]] && \
+  [[ -s "${REPO_DIR}/.agents/memory/systemPatterns.md" ]] && \
+  [[ -s "${REPO_DIR}/.agents/memory/progress.md" ]]
+}
+
+test_ci_workflow_presence() {
+  [[ -f "${REPO_DIR}/.github/workflows/ci.yml" ]]
 }
 
 test_modular_rules_presence() {
@@ -305,8 +309,9 @@ suite_conventions() {
   run_test test_env_example_presence ".env.example template exists"
   run_test test_gitignore_secrets ".gitignore protects .env secrets"
   run_test test_subagents_presence ".agents/subagents/ prompt directory exists"
-  run_test test_memory_bank_presence ".agents/memory/ session memory bank exists"
+  run_test test_memory_bank_presence ".agents/memory/ session memory bank exists and is populated"
   run_test test_modular_rules_presence ".agents/rules/ glob-scoped rules exist"
+  run_test test_ci_workflow_presence ".github/workflows/ci.yml continuous integration workflow exists"
 }
 
 # ------------------------------------------------------------------------------

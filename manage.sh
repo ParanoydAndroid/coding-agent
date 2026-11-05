@@ -121,8 +121,8 @@ cmd_setup() {
 
   # 4. Enforce standard secure permissions across repository files
   log_info "Normalizing filesystem permissions..."
-  find "${REPO_DIR}" -maxdepth 4 -type f -not -path "*/.git/*" -not -name "*.sh" -exec chmod 644 {} +
-  find "${REPO_DIR}" -maxdepth 4 -type f -name "*.sh" -exec chmod 755 {} +
+  find "${REPO_DIR}" -maxdepth 6 -type f -not -path "*/.git/*" -not -name "*.sh" -exec chmod 644 {} +
+  find "${REPO_DIR}" -maxdepth 6 -type f -name "*.sh" -exec chmod 755 {} +
   chmod 755 "${REPO_DIR}/manage.sh"
   if [[ -f "${REPO_DIR}/.env" ]]; then
     chmod 600 "${REPO_DIR}/.env"
@@ -133,6 +133,12 @@ cmd_setup() {
   if [[ -f "${REPO_DIR}/.harness/test-runner.sh" && ! -x "${REPO_DIR}/.harness/test-runner.sh" ]]; then
     chmod +x "${REPO_DIR}/.harness/test-runner.sh"
     log_success "Ensured .harness/test-runner.sh is executable"
+  fi
+
+  # 6. Install or converge git hooks guarding main
+  if [[ -d "${REPO_DIR}/.git" ]]; then
+    cmd_hook install >/dev/null 2>&1 || true
+    log_success "Verified git hooks protecting 'main' branch"
   fi
 
   log_success "Environment convergence complete. Target state verified."
@@ -172,7 +178,7 @@ cmd_audit() {
   # 1. Check for world-writable files
   log_info "Auditing filesystem permissions for world-writable files..."
   local ww_files
-  ww_files="$(find "${REPO_DIR}" -maxdepth 3 -type f -perm -002 -not -path "*/.git/*" 2>/dev/null || true)"
+  ww_files="$(find "${REPO_DIR}" -maxdepth 6 -type f -perm -002 -not -path "*/.git/*" 2>/dev/null || true)"
   if [[ -n "${ww_files}" ]]; then
     log_error "Dangerous world-writable files detected:"
     echo "${ww_files}" >&2
@@ -199,7 +205,7 @@ cmd_audit() {
   # 3. Check for broken symlinks
   log_info "Validating repository symlinks..."
   local broken_links
-  broken_links="$(find "${REPO_DIR}" -maxdepth 2 -xtype l -not -path "*/.git/*" 2>/dev/null || true)"
+  broken_links="$(find "${REPO_DIR}" -maxdepth 6 -xtype l -not -path "*/.git/*" 2>/dev/null || true)"
   if [[ -n "${broken_links}" ]]; then
     log_error "Broken symlinks detected:"
     echo "${broken_links}" >&2
@@ -218,6 +224,75 @@ cmd_audit() {
 }
 
 # ------------------------------------------------------------------------------
+# Function: cmd_hook
+# Description:
+#   Installs git hooks guarding the 'main' branch during commits and pushes.
+#   Feature branches remain completely unhindered so intermediate development
+#   commits are never blocked.
+# Arguments:
+#   $1 - Action: 'install' (default) or 'uninstall'.
+# Return:
+#   0 on success, non-zero on failure.
+# ------------------------------------------------------------------------------
+cmd_hook() {
+  local action="${1:-install}"
+  local hooks_dir="${REPO_DIR}/.git/hooks"
+
+  if [[ ! -d "${REPO_DIR}/.git" ]]; then
+    log_warn "Not a git repository; skipping git hook setup"
+    return 0
+  fi
+
+  mkdir -p "${hooks_dir}"
+
+  case "${action}" in
+    install)
+      log_info "Installing git hooks guarding 'main' branch..."
+
+      # pre-commit: restricts commits/merges on main, bypasses feature branches
+      cat <<'EOF' > "${hooks_dir}/pre-commit"
+#!/usr/bin/env bash
+set -euo pipefail
+
+CURRENT_BRANCH="$(git branch --show-current 2>/dev/null || true)"
+# Only enforce checks when committing directly on main or completing a merge on main
+if [[ "${CURRENT_BRANCH}" == "main" ]]; then
+  echo "[HOOK] Running pre-commit/pre-merge validation on main..."
+  ./manage.sh audit
+  ./manage.sh test all
+fi
+EOF
+      chmod 755 "${hooks_dir}/pre-commit"
+
+      # pre-push: restricts pushes destined for main
+      cat <<'EOF' > "${hooks_dir}/pre-push"
+#!/usr/bin/env bash
+set -euo pipefail
+
+while read -r local_ref local_oid remote_ref remote_oid; do
+  if [[ "${remote_ref}" == "refs/heads/main" || "${remote_ref}" =~ /main$ ]]; then
+    echo "[HOOK] Verifying tests and audit before pushing to main..."
+    ./manage.sh audit
+    ./manage.sh test all
+    break
+  fi
+done
+EOF
+      chmod 755 "${hooks_dir}/pre-push"
+      log_success "Git hooks installed: pre-commit and pre-push guard 'main' branch"
+      ;;
+    uninstall)
+      rm -f "${hooks_dir}/pre-commit" "${hooks_dir}/pre-push"
+      log_success "Git hooks uninstalled"
+      ;;
+    *)
+      log_error "Unknown hook action: '${action}'. Expected 'install' or 'uninstall'."
+      return 1
+      ;;
+  esac
+}
+
+# ------------------------------------------------------------------------------
 # Function: cmd_help
 # Description:
 #   Displays usage and subcommand guidance.
@@ -233,6 +308,7 @@ ${CLR_BOLD}Available Subcommands:${CLR_RESET}
   ${CLR_CYAN}setup${CLR_RESET}          Idempotently converges environment, directories, and configuration
   ${CLR_CYAN}test [suite]${CLR_RESET}   Executes automated smoke and regression test suites
   ${CLR_CYAN}audit${CLR_RESET}          Runs baseline drift, permission, and environment security audits
+  ${CLR_CYAN}hook [action]${CLR_RESET}  Manages git hooks protecting 'main' (install|uninstall)
   ${CLR_CYAN}help${CLR_RESET}           Displays this help message
 
 ${CLR_BOLD}Examples:${CLR_RESET}
@@ -240,6 +316,7 @@ ${CLR_BOLD}Examples:${CLR_RESET}
   ./manage.sh test all
   ./manage.sh test conventions
   ./manage.sh audit
+  ./manage.sh hook install
 EOF
 }
 
@@ -259,6 +336,9 @@ main() {
       ;;
     audit)
       cmd_audit "$@"
+      ;;
+    hook)
+      cmd_hook "$@"
       ;;
     help|-h|--help)
       cmd_help
