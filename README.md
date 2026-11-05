@@ -37,7 +37,7 @@ When working with an AI assistant in this repository, you aren't just getting ra
     simplify the design)           commits to feature branch)          approval before merging)            merges, and tags)
 ```
 
-1. **The "Grill-Me" Design Interview**: When you ask for a new feature, the agent will *not* immediately write code. It drafts a plan in `.agents/artifacts/` and asks you 2–4 targeted questions to simplify the design, prevent over-engineering, and agree on data formats.
+1. **The "Grill-Me" Design Interview**: When you ask for a new feature, the agent will *not* immediately write code. It drafts a plan in `.agents/artifacts/` and interviews you with substantive questions to simplify the design, identify edge cases, and resolve ambiguities before implementation.
 2. **Implementation with Automated Tests**: Once you approve the plan, the agent creates a feature branch (`feature/<name>`), writes the code, and writes automated tests to prove it works.
 3. **The Mandatory Review Gate (Safety Stop)**: The agent **must pause** after coding. It will present what was done, show you the test results, and wait for your input. Nothing touches your main branch without your explicit say-so.
 4. **Verified Release**: Once you approve, the agent updates `CHANGELOG.md`, merges the code into `main`, and creates a version tag (e.g. `v1.1.0`).

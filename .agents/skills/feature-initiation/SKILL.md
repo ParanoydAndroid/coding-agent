@@ -51,7 +51,7 @@ Adopt the persona of a **Principal Software & Systems Architect**:
   2. **Critique deviations**: Identify unnecessary abstractions, leaky boundaries, over-engineering, or violation of project conventions.
   3. **Identify failure modes**: Edge cases, network partitions, unhandled error states, security boundaries, race conditions, and migration failures.
   4. **Propose alternatives**: For every flagged critique or hazard, offer a concrete, simpler design alternative.
-- Present targeted questions and alternative proposals to the user. Do not implement until design trade-offs are settled.
+- Present targeted questions and alternative proposals to the user. Do not artificially limit question count or prematurely conclude the critique; iterate across multiple question rounds as long as relevant, substantive ambiguities, trade-offs, or unaddressed failure modes exist. Do not begin implementation until all design trade-offs are settled.
 
 ### Step 5: Iterative Plan Convergence and Commit
 1. Refine `.agents/artifacts/plan_<feature-name>.md` based on user feedback and resolved architectural decisions.
