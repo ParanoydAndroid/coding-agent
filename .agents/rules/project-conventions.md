@@ -34,12 +34,15 @@ When interacting with a user on a freshly cloned repository, or when establishin
 
 ## 3. Architectural Principles
 
-- **Pragmatic State Convergence and Idempotent Automation**:
-  - Favor declarative configuration over imperative state manipulation.
-  - Maintain a single idempotent convergence command (e.g. `./manage.sh setup` or `make setup`) that safely brings host directories, `.env` templates, networks, and services from any state to the target state.
-  - Re-running automation after an update, restart, or `git pull` must safely converge on the desired state without duplicating resources or failing on existing entities.
+- **Declarative Configuration and Universal Idempotency**:
+  - Favor declarative configuration over imperative state manipulation across all manifests, infrastructure, and workflows.
+  - Keep automation clean, reproducible, and focused strictly on the standardized architecture.
+  - All setup, build, migration, provisioning, and teardown scripts must be strictly idempotent. Running any script repeatedly from any starting state must safely converge on the desired target state without duplicating resources, corrupting data, or failing on existing entities.
+- **Pragmatic State Convergence and Lifecycle Routines**:
+  - Maintain a single idempotent convergence command (e.g. `./manage.sh setup` or `make setup`) that safely brings host directories, `.env` templates, networks, databases, and services from any state to the target state.
+  - Re-running automation after an update, restart, or `git pull` must safely converge on the desired state without leaving orphaned resources or half-applied mutations.
   - Rely on native runtime primitives for continuous recovery: declarative container restart policies (`restart: unless-stopped`) and deterministic health checks (`healthcheck:`) rather than custom daemon watchdogs.
-  - Use standard host tooling (systemd timers or cron) for periodic background maintenance (backups, vacuuming, data synchronization).
+  - Use standard host tooling (systemd timers or cron) for periodic background maintenance (backups, vacuuming, data synchronization, cache pruning).
   - Ensure boot-time convergence via a simple oneshot systemd service (or system init hook) to guarantee services start cleanly in dependency order after host reboots.
 - **Principle of Least Privilege and Defense-in-Depth**:
   - Run application services, workers, and background jobs with dedicated, non-root user identities whenever possible.
