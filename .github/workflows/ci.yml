@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    name: Test and Audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Environment
+        run: ./manage.sh setup
+
+      - name: Run Automated Test Suite
+        run: ./manage.sh test all
+
+      - name: Run Codebase Drift Audit
+        run: ./manage.sh audit

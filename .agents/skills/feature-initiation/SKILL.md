@@ -42,6 +42,7 @@ git checkout -b feature/<feature-name>
    - **Environment & Secrets**: Required configuration variables, `.env.example` keys, and defaults.
    - **Persistence & State**: File persistence, database migrations, or volume mapping changes.
    - **Automated Test Strategy**: Specific test assertions, unit checks, integration cases, or regression tests needed.
+4. Update `.agents/memory/activeContext.md` to document the active feature focus, decisions, and planned steps.
 
 ### Step 4: Interactive "Grill-Me" Review Cycle
 Adopt the persona of a **Principal Software & Systems Architect**:

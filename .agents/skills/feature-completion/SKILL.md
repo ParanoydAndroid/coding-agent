@@ -63,6 +63,10 @@ Before writing release notes or committing, conduct a comprehensive audit across
 5. **Style and Brevity Verification**:
    - Ensure all updated documentation adheres to project-wide documentation conventions: value brevity, align detail to audience/scope, eliminate redundant fine details, and omit internal development minutiae.
 
+6. **Memory Bank Synchronization (`.agents/memory/`)**:
+   - Synchronize `activeContext.md` by clearing completed feature focus, updating active patterns, and noting upcoming tasks.
+   - Synchronize `progress.md` by recording completed capabilities, updating the automated test count, and noting release tags. Never leave finished milestones marked pending.
+
 ### Step 3: Update Changelog (SemVer Minor/Major Releases)
 Review [SemVer and CalVer Guidelines](./references/semver-calver-guidelines.md) for version tier determination, roll-up synthesis, and format rules.
 * **Tagging & Changelog Scope**:

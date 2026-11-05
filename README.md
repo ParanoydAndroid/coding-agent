@@ -74,6 +74,7 @@ The `./manage.sh` script is your primary control center for running the project:
 | **`./manage.sh setup`** | Idempotently sets up `.env` from template, creates required directories, and normalizes file permissions. | After cloning, after `git pull`, or whenever environment state feels out of sync. |
 | **`./manage.sh test all`** | Runs the automated test runner to prove that all features, contracts, and invariants are green. | Before and after making any code changes. |
 | **`./manage.sh audit`** | Scans for world-writable files, exposed secrets, missing `.env` keys, and broken symlinks. | Before releases or during periodic health checks. |
+| **`./manage.sh hook install`** | Installs git hooks protecting `main` while leaving feature branch commits unconstrained. | After cloning or setting up a local development repository. |
 | **`./manage.sh help`** | Displays available commands and options. | Whenever you need a quick reminder. |
 
 ---
