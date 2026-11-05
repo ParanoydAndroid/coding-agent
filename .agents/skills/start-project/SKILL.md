@@ -40,6 +40,9 @@ Orient the developer to the core architectural invariants of this repository:
 3. **Testing Standards**:
    - Automated smoke and regression test harness.
    - Mandatory test checks for any architectural modification.
+4. **State Convergence & Self-Healing**:
+   - A single idempotent convergence command (`setup` / `converge`) safely brings the system to the desired state.
+   - Native container restart policies (`restart: unless-stopped`) and health probes (`healthcheck:`) for runtime recovery.
 
 ---
 

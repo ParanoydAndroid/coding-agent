@@ -34,10 +34,13 @@ When interacting with a user on a freshly cloned repository, or when establishin
 
 ## 3. Architectural Principles
 
-- **Declarative and Idempotent Automation**:
+- **Pragmatic State Convergence and Idempotent Automation**:
   - Favor declarative configuration over imperative state manipulation.
-  - Keep automation clean, reproducible, and focused on standardized architecture.
-  - All setup, build, migration, and provisioning scripts must be idempotent. Re-running automation after an update must safely converge on the desired state without duplicating resources or failing on existing entities.
+  - Maintain a single idempotent convergence command (e.g. `./manage.sh setup` or `make setup`) that safely brings host directories, `.env` templates, networks, and services from any state to the target state.
+  - Re-running automation after an update, restart, or `git pull` must safely converge on the desired state without duplicating resources or failing on existing entities.
+  - Rely on native runtime primitives for continuous recovery: declarative container restart policies (`restart: unless-stopped`) and deterministic health checks (`healthcheck:`) rather than custom daemon watchdogs.
+  - Use standard host tooling (systemd timers or cron) for periodic background maintenance (backups, vacuuming, data synchronization).
+  - Ensure boot-time convergence via a simple oneshot systemd service (or system init hook) to guarantee services start cleanly in dependency order after host reboots.
 - **Principle of Least Privilege and Defense-in-Depth**:
   - Run application services, workers, and background jobs with dedicated, non-root user identities whenever possible.
   - Drop unnecessary system privileges and capabilities (`cap_drop: [ALL]`, `no-new-privileges: true` in container environments).

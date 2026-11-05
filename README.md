@@ -10,6 +10,7 @@
 - **Adversarial "Grill-Me" Design Review**: Challenges assumptions, critiques premature optimization, and eliminates bespoke glue code in favor of declarative, standard solutions.
 - **Mandatory User Review Gate**: After executing a plan and making intermediate implementation commits, agents must pause and solicit explicit user review and approval before touching release notes, merging, or tagging.
 - **Pre-Execution Script Overviews**: Authoring or executing ad-hoc scripts requires providing a concise operational summary of commands, state mutations, and behavioral impact before execution.
+- **Pragmatic State Convergence**: Maintain a single idempotent convergence command (`setup`), rely on native runtime self-healing (`restart: unless-stopped` + health checks), and use simple host timers/cron for periodic maintenance.
 - **Two-Tier Secret & Configuration Model**: Committed `.env.example` templates define all variables with strict assertion syntax (`${VAR:?...}`); real secrets remain untracked in `.env`.
 - **Inviolability of Existing Tests**: Tests are never weakened or removed to make a broken build pass. Bug fixes must be accompanied by reproducing regression tests.
 - **Curated Changelog Roll-Ups**: User- and deployer-focused release notes synthesizing intermediate commits into clear milestone summaries under SemVer and CalVer.
