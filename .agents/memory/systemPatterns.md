@@ -12,5 +12,5 @@
 ## Repository Patterns
 - **Multi-Agent Entrypoint Aliasing**: `AGENTS.md` is the canonical root file; `CLAUDE.md`, `GEMINI.md`, `.cursorrules`, and `agent.md` symlink to it.
 - **Operational Dispatcher**: `./manage.sh` orchestrates `setup`, `test`, `audit`, and `hook` with zero external dependencies.
-- **Progressive Disclosure**: Skills maintain concise operational runbooks in `SKILL.md` while offloading deep catalogs, tables, and schemas to `references/`.
+- **Progressive Disclosure**: Skills maintain concise operational runbooks in `SKILL.md` while offloading detailed catalogs, tables, and schemas to `references/`.
 - **Agile Trunk Dual-Tagging**: Semantic versioning (`vMAJOR.MINOR.PATCH`) for functional milestones paired with Calendar Versioning (`YYYY.M.D.N`) for continuous trunk deployments.
