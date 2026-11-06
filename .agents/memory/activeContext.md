@@ -14,6 +14,5 @@ Subagent Model Tiering & Unified Golden-Path Reviewer: consolidating reviewer pe
 - Unified reviewer combines design-mode interrogation ("Grill-Me") with operational drift auditing under a shared Golden Path philosophy.
 
 ## Immediate Next Steps
-1. Run `./manage.sh test all` and `./manage.sh audit` to verify all invariants.
-2. Present changes at Mandatory User Review Gate for approval.
-3. Clean up ephemeral plan artifact, merge to `main`, and push with CalVer tag.
+- Stand by for new feature requests, diagnostics, or architecture reviews.
+- When beginning a new task, follow `feature-initiation` and update this file with active focus.

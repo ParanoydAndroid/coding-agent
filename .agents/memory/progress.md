@@ -18,7 +18,7 @@
 ## Verification Status
 - Automated test suite: 10/10 passing (`./manage.sh test all`).
 - Codebase drift and permission audit: Clean (`./manage.sh audit`).
-- Active releases: `v1.0.0`, `2026.11.4.1`, `2026.11.4.2`, `2026.11.5.1`, `2026.11.5.2`.
+- Active releases: `v1.0.0`, `2026.11.4.1`, `2026.11.4.2`, `2026.11.5.1`, `2026.11.5.2`, `2026.11.6.1`.
 
 ## Known Issues / Backlog
 - None.
