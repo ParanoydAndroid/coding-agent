@@ -43,7 +43,7 @@ comm -23 \
 find data/ -maxdepth 2 -not -user 1000 -not -user root 2>/dev/null || true
 
 # Audit for dangerous world-writable files (777)
-find . -maxdepth 3 -type f -perm -002 -not -path "*/.git/*"
+find . -maxdepth 6 -type f -perm -002 -not -path "*/.git/*"
 
 # Check TLS certificate expiration
 openssl x509 -enddate -noout -in certs/server.crt 2>/dev/null || true
@@ -58,6 +58,8 @@ openssl x509 -enddate -noout -in certs/server.crt 2>/dev/null || true
 | **Exposed Secret / World-Writable Permissions** | Critical Hazard | Stop immediately, revoke credentials, and re-apply `chmod 600`. |
 | **Untracked / Orphaned Process Binding Ports** | Critical Hazard | Identify process, isolate network interface, or terminate process. |
 | **Health Probe Failure / Crash Looping** | Critical Hazard | Inspect stdout/stderr logs and remediate runtime failure. |
+| **Bespoke Reinvention / Anti-Golden-Path Pattern** | Warning | Refactor to native platform primitives, standard library functions, or official framework mechanics. |
+| **Non-Idempotent Setup Mutation** | Warning | Fix setup/convergence scripts to ensure repeated runs produce identical target state. |
 | **Image Digest Skew (Running Stale Build)** | Warning | Schedule rolling restart or recreate container with updated digest. |
 | **Environment Variable Skew (`.env.example` vs `.env`)** | Warning | Synchronize missing keys to runtime `.env`. |
 | **Backup Snapshot Age > 24 Hours** | Warning | Verify scheduled backup timer and trigger manual backup if needed. |

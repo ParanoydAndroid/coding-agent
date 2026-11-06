@@ -8,10 +8,9 @@
 - [x] Canonical root `AGENTS.md` and multi-agent ecosystem symlinks (`CLAUDE.md`, `GEMINI.md`, `.cursorrules`, `agent.md`).
 - [x] Operational management CLI (`manage.sh`) supporting `setup`, `test`, `audit`, and `hook`.
 - [x] Artifact governance policy distinguishing ephemeral plans from persistent specs (`.agents/artifacts/`).
-- [x] Invocable subagent persona definitions (`.agents/subagents/`).
-- [x] Unbounded substantive Grill-Me design review framework.
+- [x] Subagent Model Tiering architecture (`principal-reviewer` on `pro`, `grep-worker` and `diff-worker` on `flash_lite`).
+- [x] Golden Path / Happy Path architectural principle codified across harness rules and reviewer persona.
 - [x] Citizen developer quickstart, cheatsheet, and prompt recipes in `README.md`.
-- [x] Expanded find traversal (`-maxdepth 6`) in `manage.sh` covering nested skill references.
 - [x] Main-guarding git hooks (`pre-commit`, `pre-push`) allowing unhindered feature branch commits.
 - [x] GitHub Actions CI workflow (`.github/workflows/ci.yml`).
 - [x] Memory Bank synchronization governance in `AGENTS.md`, `feature-initiation`, and `feature-completion`.
@@ -19,7 +18,7 @@
 ## Verification Status
 - Automated test suite: 10/10 passing (`./manage.sh test all`).
 - Codebase drift and permission audit: Clean (`./manage.sh audit`).
-- Active releases: `v1.0.0`, `2026.11.4.1`, `2026.11.4.2`.
+- Active releases: `v1.0.0`, `2026.11.4.1`, `2026.11.4.2`, `2026.11.5.1`, `2026.11.5.2`, `2026.11.6.1`.
 
 ## Known Issues / Backlog
 - None.
