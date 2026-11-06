@@ -107,7 +107,7 @@ coding-agent/
 ├── .agents/
 │   ├── memory/                                          # Persistent session memory bank
 │   ├── rules/                                           # Glob-scoped rules (*.sh, compose.yml)
-│   ├── subagents/                                       # Multi-agent role prompts (architect, auditor)
+│   ├── subagents/                                       # Model-tiered subagents (reviewer, grep, diff)
 │   ├── skills/                                          # Operational runbooks (see catalog below)
 │   └── artifacts/                                       # Architecture specs and plans
 ├── .harness/

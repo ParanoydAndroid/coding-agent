@@ -283,7 +283,10 @@ test_gitignore_secrets() {
 }
 
 test_subagents_presence() {
-  [[ -d "${REPO_DIR}/.agents/subagents" ]]
+  [[ -d "${REPO_DIR}/.agents/subagents" ]] && \
+  [[ -f "${REPO_DIR}/.agents/subagents/principal-reviewer.md" ]] && \
+  [[ -f "${REPO_DIR}/.agents/subagents/grep-worker.md" ]] && \
+  [[ -f "${REPO_DIR}/.agents/subagents/diff-worker.md" ]]
 }
 
 test_memory_bank_presence() {

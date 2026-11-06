@@ -1,21 +1,19 @@
 # Active Context
 
 ## Current Focus
-Harness operational enhancements: GitHub Actions CI workflow, git hooks guarding `main` branch, find depth fixes (maxdepth 6), and memory bank synchronization discipline.
+Subagent Model Tiering & Unified Golden-Path Reviewer: consolidating reviewer personas into `principal-reviewer` (`Model: pro`), introducing `grep-worker` and `diff-worker` (`Model: flash_lite`), and codifying the Golden Path / Happy Path architectural principle.
 
 ## Recent Changes
-- Fixed audit and permission normalization find traversal to `-maxdepth 6` in `manage.sh`.
-- Added GitHub Actions CI workflow (`.github/workflows/ci.yml`) for automated test and audit validation on push/PR.
-- Implemented `manage.sh hook install` generating `pre-commit` and `pre-push` hooks that guard `main` while leaving feature branch commits unconstrained.
-- Mandated Memory Bank reading and updating lifecycle in `AGENTS.md`, `feature-initiation`, and `feature-completion`.
-- Added automated test assertion in `.harness/test-runner.sh` verifying memory bank non-emptiness and CI workflow presence.
-- Removed arbitrary question count limits from Grill-Me review guidelines across skills, subagents, and README.
+- Consolidated `architect-critic` and `code-auditor` into unified `principal-reviewer.md` with explicit `Model: pro` and Golden Path / Happy Path preference.
+- Created `grep-worker.md` and `diff-worker.md` with `Model: flash_lite` for high-speed, cost-effective search and diff workloads.
+- Codified Subagent Model Tiering Protocol and Golden Path design bias in `AGENTS.md`.
+- Updated test runner invariant assertions to verify presence and integrity of all model-tiered subagent specifications.
 
 ## Active Decisions
-- Adopting lightweight 3-file Memory Bank (`activeContext.md`, `systemPatterns.md`, `progress.md`) with explicit lifecycle synchronization requirements.
-- Git hooks enforce checks exclusively on `main` branch operations (merges, commits on main, pushes to main); feature branch commits remain unhindered.
-- Agile Trunk Dual-Tagging model (SemVer + CalVer) with mandatory human review gates before releases.
+- Subagent model selection follows strict tiering: `pro` for architectural planning and audit; `flash_lite` for search, grep, and diffs; `inherit`/`flash` for standard tasks.
+- Unified reviewer combines design-mode interrogation ("Grill-Me") with operational drift auditing under a shared Golden Path philosophy.
 
 ## Immediate Next Steps
-- Stand by for new feature requests, diagnostics, or architecture reviews.
-- When beginning a new task, follow `feature-initiation` and update this file with active focus.
+1. Run `./manage.sh test all` and `./manage.sh audit` to verify all invariants.
+2. Present changes at Mandatory User Review Gate for approval.
+3. Clean up ephemeral plan artifact, merge to `main`, and push with CalVer tag.
