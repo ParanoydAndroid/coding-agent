@@ -116,6 +116,17 @@ This skill provides a systematic diagnostic procedure to detect drift between tr
 
 ---
 
+### Audit Area 6: Golden Path & Architectural Integrity
+
+1. **Native Primitives vs. Bespoke Reinvention**:
+   - Inspect recent changes for custom wrappers, bespoke helper scripts, or hand-rolled synchronization logic where standard library features or official framework primitives already exist.
+2. **Interface Decoupling & Boundary Leaks**:
+   - Verify that component boundaries remain clean, inputs are validated at perimeter ingress, and internal implementation details do not leak across consumers.
+3. **Idempotency & State Convergence**:
+   - Verify that the primary convergence routine (`./manage.sh setup`) converges idempotently from any starting state without leaving orphaned processes, lingering scratch files, or duplicate resources.
+
+---
+
 ## Audit Output Report Format
 
 Compile audit findings into a prioritized punchlist categorized by operational severity:
