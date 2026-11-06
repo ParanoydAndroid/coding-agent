@@ -34,7 +34,20 @@ Execute the entire test suite against the target environment:
   4. Do NOT commit, merge, or tag.
   5. Report the exact test failure and logs to the user and wait for instructions.
 
-### Step 2: Systematic Documentation and Runbook Audit
+### Step 2: Codebase Drift & Quality Audit
+Execute the automated codebase audit to verify permissions, symlinks, configuration alignment, and golden-path integrity:
+```bash
+./manage.sh audit
+```
+* **Assertion**: The audit must report `System healthy` with 0 issues.
+* **Checks Performed**:
+  - Filesystem permissions (zero world-writable files, secrets restricted to `600`, scripts `755`, standard files `644`).
+  - Environment variable template alignment (`.env.example` vs `.env`).
+  - Repository symlink integrity across the workspace.
+  - Golden Path alignment (no fragile wrappers, redundant utility functions, or undocumented workarounds).
+* **CRITICAL STOP-ON-FAILURE**: If the audit detects permission violations, broken symlinks, or configuration skew, stop and remediate the issue before proceeding to documentation or release steps.
+
+### Step 3: Systematic Documentation and Runbook Audit
 Before writing release notes or committing, conduct a comprehensive audit across all documentation, runbooks, and skills to ensure they accurately reflect the feature's changes:
 
 1. **Branch Diff Inspection**:
@@ -67,7 +80,7 @@ Before writing release notes or committing, conduct a comprehensive audit across
    - Synchronize `activeContext.md` by clearing completed feature focus, updating active patterns, and noting upcoming tasks.
    - Synchronize `progress.md` by recording completed capabilities, updating the automated test count, and noting release tags. Never leave finished milestones marked pending.
 
-### Step 3: Update Changelog (SemVer Minor/Major Releases)
+### Step 4: Update Changelog (SemVer Minor/Major Releases)
 Review [SemVer and CalVer Guidelines](./references/semver-calver-guidelines.md) for version tier determination, roll-up synthesis, and format rules.
 * **Tagging & Changelog Scope**:
   - Only features automatically receive `semver.minor` or `semver.major` bumps.
@@ -96,14 +109,14 @@ Review [SemVer and CalVer Guidelines](./references/semver-calver-guidelines.md) 
   - <Bullet points describing security hardening or access control updates>
   ```
 
-### Step 4: Clean Up Temporary Planning Artifacts
+### Step 5: Clean Up Temporary Planning Artifacts
 Remove ephemeral planning and design documents while preserving persistent architectural artifacts:
 ```bash
 rm -f .agents/artifacts/plan_*.md
 ```
 * Note: Keep persistent architectural specifications (such as `.agents/artifacts/architecture.md`) intact.
 
-### Step 5: Final Feature Branch Commit and Push
+### Step 6: Final Feature Branch Commit and Push
 Stage all modified files (including code, documentation, `CHANGELOG.md`, and rules):
 ```bash
 git add -A
@@ -111,7 +124,7 @@ git commit -m "feat(<feature-name>): complete <feature-name> implementation and 
 git push origin <feature-branch>
 ```
 
-### Step 6: Merge into Main and Apply Dual Release Tags
+### Step 7: Merge into Main and Apply Dual Release Tags
 Switch to `main`, synchronize with remote, merge the feature branch, apply tags, and push:
 ```bash
 git checkout main
