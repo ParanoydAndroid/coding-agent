@@ -34,18 +34,33 @@ Execute the entire test suite against the target environment:
   4. Do NOT commit, merge, or tag.
   5. Report the exact test failure and logs to the user and wait for instructions.
 
-### Step 2: Codebase Drift & Quality Audit
-Execute the automated codebase audit to verify permissions, symlinks, configuration alignment, and golden-path integrity:
-```bash
-./manage.sh audit
-```
-* **Assertion**: The audit must report `System healthy` with 0 issues.
-* **Checks Performed**:
-  - Filesystem permissions (zero world-writable files, secrets restricted to `600`, scripts `755`, standard files `644`).
-  - Environment variable template alignment (`.env.example` vs `.env`).
-  - Repository symlink integrity across the workspace.
-  - Golden Path alignment (no fragile wrappers, redundant utility functions, or undocumented workarounds).
-* **CRITICAL STOP-ON-FAILURE**: If the audit detects permission violations, broken symlinks, or configuration skew, stop and remediate the issue before proceeding to documentation or release steps.
+### Step 2: Interactive Code & Architecture Audit (`principal-reviewer`)
+Before proceeding to documentation and release notes, conduct an interactive code audit using the `principal-reviewer` persona (`Model: "pro"`):
+
+1. **Automated Baseline Audit**:
+   Execute the baseline audit command to verify mechanical hygiene:
+   ```bash
+   ./manage.sh audit
+   ```
+   * Ensure 0 world-writable files, 0 broken symlinks, and valid git index execution modes (`100755` for scripts).
+
+2. **Branch Diff Inspection**:
+   Inspect the full implementation diff relative to `main`:
+   ```bash
+   git diff main...HEAD
+   ```
+
+3. **Architectural Evaluation Across 4 Pillars**:
+   The reviewer evaluates the concrete changes against the core design priorities:
+   - **Golden Path & Mechanical Integrity**: Did fragile wrappers, redundant utility functions, or undocumented workarounds sneak into the code? Can native platform primitives, standard libraries, or framework features replace custom logic?
+   - **Declarative State & Idempotency**: Are configurations centrally declared in `.env.example` with strict parameter expansion assertions (`${VAR:?error}`)? Does the system converge cleanly and idempotently via `./manage.sh setup`?
+   - **Failure Modes & Defensiveness**: Are errors handled defensively without silent suppression? Are existing automated tests respected and preserved? Are bug fixes accompanied by reproducing regression tests?
+   - **Least Privilege & Boundary Security**: Are permissions strictly least-privilege (secrets at `600`, scripts at `755`)? Are service identities non-root and credentials excluded from git history, logs, and artifacts?
+
+4. **Interactive Engagement**:
+   - The reviewer presents its findings, concrete trade-offs, and proposed simplifications to the user.
+   - If architectural concerns, anti-patterns, or drift are identified, address and remediate them before proceeding.
+   - Do not proceed to documentation or release steps until user alignment is settled.
 
 ### Step 3: Systematic Documentation and Runbook Audit
 Before writing release notes or committing, conduct a comprehensive audit across all documentation, runbooks, and skills to ensure they accurately reflect the feature's changes:

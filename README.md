@@ -40,7 +40,7 @@ When working with an AI assistant in this repository, you aren't just getting ra
 1. **The "Grill-Me" Design Interview**: When you ask for a new feature, the agent will *not* immediately write code. It drafts a plan in `.agents/artifacts/` and interviews you with substantive questions to simplify the design, identify edge cases, and resolve ambiguities before implementation.
 2. **Implementation with Automated Tests**: Once you approve the plan, the agent creates a feature branch (`feature/<name>`), writes the code, and writes automated tests to prove it works.
 3. **The Mandatory Review Gate (Safety Stop)**: The agent **must pause** after coding. It will present what was done, show you the test results, and wait for your input. Nothing touches your main branch without your explicit say-so.
-4. **Verified Release**: Once you approve, the agent updates `CHANGELOG.md`, merges the code into `main`, and creates a version tag (e.g. `v1.1.0`).
+4. **Verified Release**: Once you approve, the agent runs an interactive architect code audit, updates `CHANGELOG.md`, merges the code into `main`, and creates a version tag.
 
 ---
 
@@ -129,7 +129,7 @@ All operational runbooks adhere to **progressive disclosure** under `.agents/ski
 | :--- | :--- |
 | **`start-project`** | Onboards new developers or agents, explores hardware/platform constraints, assesses service needs, and scaffolds initial configuration. |
 | **`feature-initiation`** | Mainline synchronization, branch checkout (`feature/<name>`), architectural plan drafting, opinionated "grill-me" critique cycle, and mandatory review pause. |
-| **`feature-completion`** | Sequential test verification, stop-on-failure enforcement, systematic documentation audit, roll-up changelog drafting, merge, and dual SemVer/CalVer tagging. |
+| **`feature-completion`** | Sequential test verification, interactive architect code audit (`principal-reviewer`), documentation audit, roll-up changelog drafting, merge, and tagging. |
 | **`component-authoring`** | Procedural guide for authoring modules and services: parameter expansion assertions, canonical key order, and least-privilege non-root execution. |
 | **`component-lifecycle`** | Coordinates adding or decommissioning components across the 6 architectural touchpoints (spec, env, ingress, observability, persistence, tests). |
 | **`test-authoring`** | Systematic patterns for smoke, contract, interconnect, and negative security tests; enforces reproducing tests before bug fixes. |
