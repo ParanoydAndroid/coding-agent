@@ -1,17 +1,25 @@
 # Active Context
 
 ## Current Focus
-Subagent Model Tiering & Unified Golden-Path Reviewer: consolidating reviewer personas into `principal-reviewer` (`Model: pro`), introducing `grep-worker` and `diff-worker` (`Model: flash_lite`), and codifying the Golden Path / Happy Path architectural principle.
+Polyglot Language Coding Invariants: Feature completed, validated across test runner (12/12 passing) and security audit, released as `v1.1.0` / `2026.11.9.1`.
+
+## Active Branch
+`main`
 
 ## Recent Changes
-- Consolidated `architect-critic` and `code-auditor` into unified `principal-reviewer.md` with explicit `Model: pro` and Golden Path / Happy Path preference.
-- Created `grep-worker.md` and `diff-worker.md` with `Model: flash_lite` for high-speed, cost-effective search and diff workloads.
-- Codified Subagent Model Tiering Protocol and Golden Path design bias in `AGENTS.md`.
-- Updated test runner invariant assertions to verify presence and integrity of all model-tiered subagent specifications.
+- Consolidated language coding invariants for TypeScript, Python (3.12+ baseline), and Go directly into canonical `AGENTS.md` Section 4.
+- Created `.agents/skills/component-authoring/references/polyglot-idioms.md` with complete implementation and test templates.
+- Updated `component-authoring/SKILL.md` and `README.md` to index polyglot standards.
+- Expanded `.harness/test-runner.sh` with `test_polyglot_conventions_presence` and `test_modular_rules_syntax` (12/12 tests passing).
+- Updated `CHANGELOG.md` with release milestone `[1.1.0] / [2026.11.9.1]`.
+- Synchronized memory bank files (`activeContext.md`, `systemPatterns.md`, `progress.md`).
+- Removed ephemeral planning artifact `plan_polyglot_coding_rulesets.md`.
 
 ## Active Decisions
-- Subagent model selection follows strict tiering: `pro` for architectural planning and audit; `flash_lite` for search, grep, and diffs; `inherit`/`flash` for standard tasks.
-- Unified reviewer combines design-mode interrogation ("Grill-Me") with operational drift auditing under a shared Golden Path philosophy.
+- Polyglot rules codified directly in `AGENTS.md` adhering to Antigravity's consolidated rule architecture, eliminating pseudo-globbed `.agents/rules/*.md` files.
+- Extended implementation templates offloaded to `component-authoring` reference documents via progressive disclosure.
+- Python standard targets Python 3.12+ runtime (trailing 12 months from annual release; no legacy <3.12 compatibility).
+- TypeScript enforces runtime boundary validation using existing project libraries or native type guards without adding unvetted dependencies.
 
 ## Immediate Next Steps
 - Stand by for new feature requests, diagnostics, or architecture reviews.

@@ -11,6 +11,7 @@
 
 ## Repository Patterns
 - **Multi-Agent Entrypoint Aliasing**: `AGENTS.md` is the canonical root file; `CLAUDE.md`, `GEMINI.md`, `.cursorrules`, and `agent.md` symlink to it.
+- **Consolidated Polyglot Rule Architecture**: Core language invariants (TypeScript, Python 3.12+, Go) codified directly in `AGENTS.md` for unbreakable, zero-latency enforcement across all turns without rule fragmentation; extensive implementation templates and test patterns offloaded to `component-authoring` references via progressive disclosure.
 - **Operational Dispatcher**: `./manage.sh` orchestrates `setup`, `test`, `audit`, and `hook` with zero external dependencies.
 - **Progressive Disclosure**: Skills maintain concise operational runbooks in `SKILL.md` while offloading detailed catalogs, tables, and schemas to `references/`.
 - **Agile Trunk Dual-Tagging**: Semantic versioning (`vMAJOR.MINOR.PATCH`) for functional milestones paired with Calendar Versioning (`YYYY.M.D.N`) for continuous trunk deployments.

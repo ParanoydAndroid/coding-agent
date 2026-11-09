@@ -5,6 +5,23 @@ This repository adheres to [Semantic Versioning](https://semver.org/) paired wit
 
 ---
 
+## [1.1.0] / [2026.11.9.1] - Polyglot Language Invariants and Component Templates (2026-11-09)
+
+### Added
+- **Polyglot Coding Invariants in `AGENTS.md`**: Direct, always-on language guardrails for TypeScript/TSX, Python (3.12+ baseline), and Go integrated into Section 4 of `AGENTS.md`:
+  - **TypeScript**: Strict typing (`noImplicitAny`, zero `any`), runtime boundary validation using existing libraries or native type guards without adding unvetted dependencies, pure ESM, and floating promise prevention with `AbortSignal`.
+  - **Python (3.12+ Baseline)**: Modern typing (PEP 695 type parameter syntax, PEP 604 unions), standard `pathlib.Path` and `logging`, zero mutable defaults, explicit exception chaining (`raise ... from err`), and `asyncio.TaskGroup` structured concurrency.
+  - **Go**: Immediate error checking and contextual wrapping (`%w`), `context.Context` propagation as first parameter, leak-free goroutine termination, consumer-defined interfaces, and table-driven tests.
+- **Polyglot Idioms and Reference Templates**: Created `.agents/skills/component-authoring/references/polyglot-idioms.md` with complete code templates for TypeScript type guard assertions and timeout handling, Python 3.12+ `TaskGroup` workers and frozen dataclasses, and Go table-driven parallel unit tests.
+- **Automated Polyglot Invariant Tests**: Added `test_polyglot_conventions_presence` and `test_modular_rules_syntax` to `.harness/test-runner.sh` asserting convention integrity.
+
+### Changed
+- **Rule Architecture Alignment**: Consolidated language standards directly into `AGENTS.md` following Antigravity's consolidated rule architecture, eliminating pseudo-globbed `.agents/rules/*.md` files to prevent context bloat and token waste.
+- **Component Authoring Runbook**: Updated `.agents/skills/component-authoring/SKILL.md` to reference polyglot idiom templates for module scaffolding.
+- **Documentation & Guardrails**: Updated `README.md` Core Guardrails to index polyglot language invariants.
+
+---
+
 ## [1.0.0] / [2026.11.4.1] - Initial Release of Universal Coding Agent Framework (2026-11-04)
 
 ### Added

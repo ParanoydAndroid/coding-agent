@@ -12,6 +12,7 @@ This skill guides the creation and modification of services, modules, and compon
 
 ## Prerequisites
 - Reference [Component and Configuration Standards Reference](./references/component-spec.md) for structure, key ordering, and privilege rules.
+- Reference [Polyglot Language Idioms and Reference Templates](./references/polyglot-idioms.md) for TypeScript, Python (3.12+), and Go implementation templates and test patterns.
 - Ensure the repository working tree is clean or on an active feature branch.
 
 ---
