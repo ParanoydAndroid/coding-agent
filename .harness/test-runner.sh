@@ -301,10 +301,7 @@ test_ci_workflow_presence() {
 
 test_modular_rules_presence() {
   [[ -f "${REPO_DIR}/.agents/rules/shell-scripting.md" ]] && \
-  [[ -f "${REPO_DIR}/.agents/rules/containers-and-env.md" ]] && \
-  [[ -f "${REPO_DIR}/.agents/rules/typescript.md" ]] && \
-  [[ -f "${REPO_DIR}/.agents/rules/python.md" ]] && \
-  [[ -f "${REPO_DIR}/.agents/rules/go.md" ]]
+  [[ -f "${REPO_DIR}/.agents/rules/containers-and-env.md" ]]
 }
 
 test_modular_rules_syntax() {
@@ -315,6 +312,13 @@ test_modular_rules_syntax() {
     grep -q "^trigger: " "${rule_file}" || return 1
     grep -E -q "^(globs:|trigger: always_on)" "${rule_file}" || return 1
   done
+}
+
+test_polyglot_conventions_presence() {
+  grep -q "TypeScript / TSX" "${REPO_DIR}/AGENTS.md" && \
+  grep -q "Python (3.12+ Baseline)" "${REPO_DIR}/AGENTS.md" && \
+  grep -q "\*\*Go\*\*:" "${REPO_DIR}/AGENTS.md" && \
+  [[ -f "${REPO_DIR}/.agents/skills/component-authoring/references/polyglot-idioms.md" ]]
 }
 
 suite_conventions() {
@@ -329,6 +333,7 @@ suite_conventions() {
   run_test test_memory_bank_presence ".agents/memory/ session memory bank exists and is populated"
   run_test test_modular_rules_presence ".agents/rules/ glob-scoped rules exist"
   run_test test_modular_rules_syntax ".agents/rules/ YAML frontmatter and triggers are valid"
+  run_test test_polyglot_conventions_presence "AGENTS.md polyglot coding invariants and reference templates exist"
   run_test test_ci_workflow_presence ".github/workflows/ci.yml continuous integration workflow exists"
 }
 

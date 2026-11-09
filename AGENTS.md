@@ -43,7 +43,7 @@ When newly instantiated against any repository, orient yourself using the follow
 1. **`README.md`**: The authoritative reference for project purpose, repository structure, prerequisite runtimes, service interfaces, configuration paths, and core CLI commands.
 2. **`AGENTS.md` / `agent.md` (`.agents/rules/project-conventions.md`)**: Canonical behavioral instructions, engineering standards, and coding conventions. The root symlink ensures universal compatibility across multi-agent tooling.
 3. **`.agents/memory/`**: Persistent session memory bank (`activeContext.md`, `systemPatterns.md`, `progress.md`) maintaining task focus, architectural quirks, and milestones across session boundaries and context compactions.
-4. **`.agents/rules/`**: Glob-scoped language and manifest conventions (`typescript.md` for `*.ts`/`*.tsx`, `python.md` for `*.py`, `go.md` for `*.go`, `shell-scripting.md` for `*.sh`, `containers-and-env.md` for `compose.yml`).
+4. **`.agents/rules/`**: Glob-scoped manifest and automation conventions (`shell-scripting.md` for `*.sh`, `containers-and-env.md` for `compose.yml`).
 5. **`.agents/artifacts/`**: Versioned directory for architecture specifications, design documents, and technical audits (see [`.agents/artifacts/architecture.md`](.agents/artifacts/architecture.md)). Read existing artifacts before proposing or executing work.
 6. **Configuration & Dependency Manifests**: Package manifests (`package.json`, `Cargo.toml`, `pyproject.toml`, `go.mod`, `compose.yml`) and configuration templates (`.env.example`).
 
@@ -90,10 +90,26 @@ When interacting with a user on a freshly cloned repository, or when establishin
   - Keep functions focused and cohesive. Favor modular, composable functions over monolithic procedures.
   - Handle errors explicitly and defensively. Never suppress or ignore unexpected exceptions without explicit justification.
 - **Polyglot Language Invariants**:
-  - Detailed, glob-scoped language rules are codified under `.agents/rules/`:
-    - **TypeScript / TSX** ([`.agents/rules/typescript.md`](.agents/rules/typescript.md)): Strict typing (`noImplicitAny`, zero `any`), runtime boundary validation without unvetted external dependencies, pure ESM, and floating promise prevention.
-    - **Python** ([`.agents/rules/python.md`](.agents/rules/python.md)): Modern Python 3.12+ baseline (PEP 695 generics, PEP 604 unions), standard `pathlib.Path` and `logging`, zero mutable defaults, explicit exception chaining (`raise from`), and structured concurrency (`asyncio.TaskGroup`).
-    - **Go** ([`.agents/rules/go.md`](.agents/rules/go.md)): Immediate error checking and contextual wrapping (`%w`), `context.Context` propagation as the first parameter, leak-free goroutine lifecycles, small consumer-defined interfaces, and table-driven tests.
+  - **TypeScript / TSX**:
+    - Assume `strict: true` and `noImplicitAny: true`. Never use `any`; use `unknown` and narrow via type guards or assertion functions.
+    - Validate external data at runtime perimeters. Use existing schema validation libraries (Zod, ArkType, Valibot) if already in `package.json`; otherwise, write native TypeScript type guards without adding new dependencies.
+    - Strictly prioritize native runtime primitives (Node.js 18+ / Web Standards): `fetch()`, `node:crypto`, `node:fs/promises`, and native array methods over micro-libraries.
+    - Pure ESM exclusively; never mix CJS and ESM; supply explicit relative `.js` extensions for NodeNext resolution.
+    - No floating promises: all promises must be awaited, returned, or explicitly marked `void` with a `.catch()` handler. Use `AbortSignal` for timeouts and cancellation.
+  - **Python (3.12+ Baseline)**:
+    - Target Python 3.12+ features exclusively (PEP 695 generics: `def f[T]...`, PEP 604 unions: `X | Y`, `typing.Self`).
+    - Model structured data using `@dataclass(frozen=True)` or Pydantic. Avoid passing untyped nested dictionaries across module boundaries.
+    - Mandatory standard library primitives: `pathlib.Path` for all paths (ban `os.path`), `subprocess.run(check=True)` with argument lists (ban `shell=True`), structured `logging` (ban `print()` in logic).
+    - Zero mutable default arguments (`def f(items=[])` is prohibited; default to `None` and initialize defensively).
+    - Never use bare `except:` or `except Exception: pass`. Catch narrow exceptions and chain with `raise ... from err`.
+    - Mandatory context managers (`with` / `async with`). Orchestrate async coroutines via `asyncio.TaskGroup` and avoid blocking the event loop with synchronous I/O.
+  - **Go**:
+    - Zero discarded errors: never ignore returned errors with `_ = fn()`. Check immediately and wrap with descriptive context: `fmt.Errorf("description: %w", err)`.
+    - `ctx context.Context` must be the first parameter in all functions involving I/O, network, or storage. Never store `context.Context` inside a struct.
+    - Prevent goroutine leaks: every spawned goroutine must have a deterministic termination path via `ctx.Done()`, channel closure, or `sync.WaitGroup` / `errgroup`.
+    - Accept interfaces, return concrete structs. Define interfaces at the consumption point and keep them small (1–2 methods).
+    - Prefer Go standard library (`net/http`, `encoding/json`, `crypto/*`, `testing`). Write table-driven unit tests (`tests := []struct{...}`).
+  - *Extended Templates*: Consult [Polyglot Language Idioms and Reference Templates](.agents/skills/component-authoring/references/polyglot-idioms.md) for full scaffolding patterns.
 - **Git Staging Hygiene and Atomic Commit Discipline**:
   - *Never Stage Blindly*: Never execute `git add .` or `git add -A` without first inspecting `git status -s` to verify no scratch files, secrets, or untracked artifacts are staged.
   - *Atomic Commits*: Each commit must encapsulate exactly one cohesive logical change.

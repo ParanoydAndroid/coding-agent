@@ -1,28 +1,29 @@
 # Active Context
 
 ## Current Focus
-Polyglot Language Coding Rulesets: Codifying intelligence and coding standards for TypeScript, Python, and Go.
+Polyglot Language Coding Invariants: Codifying unbreakable coding standards for TypeScript, Python (3.12+), and Go directly in canonical `AGENTS.md`, and providing deep scaffolding idioms in `component-authoring` references.
 
 ## Active Branch
 `feature/polyglot-coding-rulesets`
 
 ## Recent Changes
 - Branch isolated from latest `main`.
-- Plan finalized and committed to branch (`docs(plan): add architectural plan for polyglot coding rulesets`).
-- Authored `.agents/rules/typescript.md` with strict typing, zero-any invariant, runtime boundary validation without unvetted packages, pure ESM, and async hygiene.
-- Authored `.agents/rules/python.md` with Python 3.12+ modern typing (PEP 695 / 604), `pathlib.Path`, zero mutable defaults, explicit exception chaining, and `asyncio.TaskGroup`.
-- Authored `.agents/rules/go.md` with explicit error wrapping (`%w`), context propagation, goroutine leak prevention, small interfaces, and table-driven tests.
-- Updated `AGENTS.md` (Sections 2 and 4) to index and enforce polyglot coding invariants.
-- Updated `.harness/test-runner.sh` with `test_modular_rules_presence` (5 modular rule files) and `test_modular_rules_syntax` (YAML frontmatter and trigger validation).
-- Updated `.agents/memory/systemPatterns.md` with the Polyglot Modular Rule Architecture pattern.
-- Verified all 11 test assertions passing (`./manage.sh test all`) and clean codebase audit (`./manage.sh audit`).
-- Intermediate implementation committed: `feat(rules): add typescript, python, and go coding standards` (`17edd80`).
+- Plan refined to adhere to Antigravity's consolidated rule architecture, eliminating pseudo-globbed `.agents/rules/*.md` files to avoid fragmentation and context bloat.
+- Codified always-on polyglot language invariants directly into `AGENTS.md` (Section 4):
+  - **TypeScript**: Strict typing (`noImplicitAny`, zero `any`), runtime boundary validation using existing project libraries or native type guards (zero unnecessary external deps), pure ESM, and floating promise prevention with `AbortSignal`.
+  - **Python (3.12+ Baseline)**: Modern typing (PEP 695 generics, PEP 604 unions), standard `pathlib.Path` and `logging`, zero mutable defaults, explicit exception chaining (`raise ... from err`), and `asyncio.TaskGroup` structured concurrency.
+  - **Go**: Immediate error checking and contextual wrapping (`%w`), `context.Context` propagation as first parameter, leak-free goroutine termination, small consumer-defined interfaces, and table-driven tests.
+- Created `.agents/skills/component-authoring/references/polyglot-idioms.md` with complete code templates (runtime type guards, `AbortController` timeouts, Python 3.12+ `TaskGroup` workers, Go table-driven tests).
+- Updated `component-authoring/SKILL.md` to reference `polyglot-idioms.md`.
+- Updated `.harness/test-runner.sh` with `test_polyglot_conventions_presence` and `test_modular_rules_syntax`.
+- Updated `.agents/memory/systemPatterns.md` documenting the Consolidated Polyglot Rule Architecture pattern.
+- Verified all 12 test assertions passing (`./manage.sh test all`) and clean codebase audit (`./manage.sh audit`).
 
 ## Verification Status
-- Automated Test Suite: 11/11 passing (`./manage.sh test all`).
+- Automated Test Suite: 12/12 passing (`./manage.sh test all`).
 - Codebase & Permission Audit: Clean (`./manage.sh audit`).
 - Git working tree: Clean on `feature/polyglot-coding-rulesets`.
 
 ## Immediate Next Steps (Pending User Review)
 - Pause at Mandatory Review Checkpoint.
-- Await user inspection, testing, and explicit approval before initiating `feature-completion` (updating manifests/CHANGELOG, merging to `main`, and proposing release tag).
+- Await user inspection, testing, and explicit approval before initiating `feature-completion` (updating manifests/CHANGELOG, merging to `main`, and presenting the release tagging packet).

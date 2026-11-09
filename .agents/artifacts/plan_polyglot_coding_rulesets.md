@@ -1,9 +1,9 @@
-# Architectural Plan: Polyglot Language Coding Rulesets (TypeScript, Python, Go)
+# Architectural Plan: Polyglot Language Coding Invariants (TypeScript, Python, Go)
 
 ## 1. Problem Statement & Scope Boundaries
 
 ### Problem Statement
-The `coding-agent` harness currently provides robust guardrails for system architecture, containerization manifests (`containers-and-env.md`), and Bash shell scripting (`shell-scripting.md`). However, it lacks dedicated language-level conventions and idiomatic constraints for application development in TypeScript, Python, and Go. When an AI agent authors application code without structured language guardrails, it frequently introduces recurring anti-patterns:
+The `coding-agent` harness currently provides robust guardrails for systems architecture, containerization manifests (`containers-and-env.md`), and Bash shell scripting (`shell-scripting.md`). However, it lacks dedicated language-level conventions and idiomatic constraints for application development in TypeScript, Python, and Go. When an AI agent authors application code without structured language guardrails, it frequently introduces recurring anti-patterns:
 - Dependency sprawl (e.g. pulling in `axios`, `lodash`, `requests` instead of native runtime/stdlib primitives).
 - Loose type assertions and boundary escapes (`any` casts, untyped `dict` bags, empty `interface{}`).
 - Missing or improper error handling (swallowing exceptions, discarding error returns with `_ =`, missing error wrapping with `%w`).
@@ -11,67 +11,56 @@ The `coding-agent` harness currently provides robust guardrails for system archi
 
 ### Scope Boundaries
 - **In Scope**:
-  - Authoring modular, glob-triggered rule definitions for TypeScript, Python, and Go under `.agents/rules/`.
-  - Keeping each rule file under ~120 lines, focusing strictly on negative constraints, contract boundaries, and canonical idioms.
-  - Specifying strict dependency gating for TypeScript (use in-repo validator or native type guards; no automatic new deps).
+  - Consolidating core negative constraints and language invariants directly into `AGENTS.md` Section 4 for always-on enforcement without pseudo-globbing.
+  - Offloading comprehensive implementation boilerplate, type guard examples, and test templates to `.agents/skills/component-authoring/references/polyglot-idioms.md` via progressive disclosure.
+  - Enforcing strict dependency gating for TypeScript (use in-repo validator or native type guards; no automatic new deps).
   - Target modern Python 3.12+ runtime (trailing 12 months from annual release; no legacy <3.12 compatibility).
-  - Updating `AGENTS.md` (and by extension symlinked `CLAUDE.md`, `GEMINI.md`, `.cursorrules`, `agent.md`) to integrate language-specific rule references.
-  - Updating the automated test harness (`.harness/test-runner.sh`) with both presence and frontmatter syntax validation (`test_modular_rules_syntax`).
+  - Enforcing Go explicit error wrapping (`%w`), context propagation, and leak-free goroutines.
+  - Updating the automated test harness (`.harness/test-runner.sh`) to assert polyglot conventions in `AGENTS.md` and the presence of reference templates.
   - Synchronizing persistent memory bank files (`activeContext.md`, `systemPatterns.md`).
 - **Out of Scope**:
-  - Additional `.cursor/rules/` symlinks (relying solely on existing `.cursorrules -> AGENTS.md`).
+  - Fragmented `.agents/rules/*.md` files for TypeScript, Python, and Go (avoids fake globbing and respects Antigravity's consolidated rule architecture).
   - Backward compatibility for Python < 3.12.
-  - Modifying existing container or shell scripting rules.
+  - Delegating routine coding to a separate subagent (avoids multi-turn latency and context loss).
 
 ---
 
 ## 2. Targeted State Mutations
 
 ### New Files
-1. `.agents/rules/typescript.md`
-   - Glob triggers: `*.ts`, `*.tsx`, `*.mts`, `*.cts`, `tsconfig*.json`, `package.json`
-   - Content: Strict typing (`no-any`, native type guards / existing schema validators), native runtime preference (`fetch`, `node:crypto`), async hygiene, and ESM coherence.
-2. `.agents/rules/python.md`
-   - Glob triggers: `*.py`, `pyproject.toml`, `requirements*.txt`, `Pipfile`
-   - Content: Python 3.12+ modern typing (PEP 695 type statements, PEP 604 unions), `pathlib.Path` standard, mutable default ban, explicit exception chaining (`raise from`), structured concurrency (`asyncio.TaskGroup`).
-3. `.agents/rules/go.md`
-   - Glob triggers: `*.go`, `go.mod`, `go.sum`, `go.work`
-   - Content: Explicit error handling and `%w` wrapping, `context.Context` propagation as first parameter, goroutine termination invariants, interface simplicity, table-driven tests.
+1. `.agents/skills/component-authoring/references/polyglot-idioms.md`
+   - Content: Deep implementation templates for TypeScript runtime type guards / `AbortController`, Python 3.12+ `TaskGroup` / frozen dataclass models, and Go error wrapping / table-driven test patterns.
 
 ### Modified Files
 1. `AGENTS.md`
-   - Update Section 2 (Project Context and Onboarding Entrypoint) to index `.agents/rules/typescript.md`, `python.md`, and `go.md`.
-   - Update Section 4 (Code Style and Documentation Standards) with cross-cutting language invariants.
-2. `.harness/test-runner.sh`
-   - Extend `test_modular_rules_presence` to assert presence of `typescript.md`, `python.md`, and `go.md`.
-   - Add `test_modular_rules_syntax` asserting valid YAML frontmatter (`trigger:` and `globs:` or `always_on`) across all rules in `.agents/rules/`.
-3. `.agents/memory/activeContext.md`
+   - Update Section 2 (Project Context and Onboarding Entrypoint).
+   - Update Section 4 (Code Style and Documentation Standards) with comprehensive, always-on Polyglot Language Invariants (TypeScript, Python 3.12+, Go).
+2. `.agents/skills/component-authoring/SKILL.md`
+   - Add reference link to `references/polyglot-idioms.md`.
+3. `.harness/test-runner.sh`
+   - Add `test_polyglot_conventions_presence` asserting that `AGENTS.md` codifies TypeScript, Python (3.12+), and Go invariants and that the polyglot reference idioms template is present.
+4. `.agents/memory/activeContext.md`
    - Update with live feature status, decisions, and immediate next steps.
-4. `.agents/memory/systemPatterns.md`
-   - Document polyglot modular rule trigger architecture.
+5. `.agents/memory/systemPatterns.md`
+   - Document the Consolidated Polyglot Rule Architecture pattern.
 
 ---
 
 ## 3. Verification Steps
 
-1. **Rule File Integrity**:
-   - Verify all files under `.agents/rules/*.md` parse cleanly with valid frontmatter headers:
-     ```bash
-     head -n 10 .agents/rules/*.md
-     ```
-2. **Automated Test Harness Execution**:
+1. **Automated Test Harness Execution**:
    - Run the baseline test suite via `manage.sh`:
      ```bash
      ./manage.sh test conventions
      ./manage.sh test all
      ```
    - All tests must pass (100% pass rate).
-3. **Repository Audit**:
+2. **Repository Audit**:
    - Verify permissions and symlink resolution:
      ```bash
      ./manage.sh audit
      ```
-4. **Git Tree Inspection**:
+3. **Git Tree Inspection**:
    - Ensure clean staging with no untracked scratch files:
      ```bash
      git status -s
