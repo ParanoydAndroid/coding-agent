@@ -14,11 +14,14 @@
 - [x] Main-guarding git hooks (`pre-commit`, `pre-push`) allowing unhindered feature branch commits.
 - [x] GitHub Actions CI workflow (`.github/workflows/ci.yml`).
 - [x] Memory Bank synchronization governance in `AGENTS.md`, `feature-initiation`, and `feature-completion`.
+- [x] Consolidated Polyglot Language Invariants (TypeScript, Python 3.12+, Go) in canonical `AGENTS.md`.
+- [x] Reference code templates and test patterns in `.agents/skills/component-authoring/references/polyglot-idioms.md`.
+- [x] Automated test runner expanded to 12 passing assertions verifying polyglot conventions and rule syntax.
 
 ## Verification Status
-- Automated test suite: 10/10 passing (`./manage.sh test all`).
+- Automated test suite: 12/12 passing (`./manage.sh test all`).
 - Codebase drift and permission audit: Clean (`./manage.sh audit`).
-- Active releases: `v1.0.0`, `2026.11.4.1`, `2026.11.4.2`, `2026.11.5.1`, `2026.11.5.2`, `2026.11.6.1`.
+- Active releases: `v1.0.0`, `2026.11.4.1`, `2026.11.4.2`, `2026.11.5.1`, `2026.11.5.2`, `2026.11.6.1`, `v1.1.0`, `2026.11.9.1`.
 
 ## Known Issues / Backlog
 - None.

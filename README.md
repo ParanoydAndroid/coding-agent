@@ -85,6 +85,7 @@ The harness enforces key operating invariants defined in [AGENTS.md](AGENTS.md):
 
 - **Mandatory Review Gate**: The agent pauses after drafting plans and writing code; nothing is merged to `main` without human approval.
 - **Negative Constraints**: Strictly no phantom refactoring outside task scope, no pruning existing code comments or docstrings, and no new unvetted external dependencies.
+- **Polyglot Language Invariants**: Strict typing and boundary validation in TypeScript, modern Python 3.12+ standard library conventions, and explicit `%w` error wrapping and context propagation in Go.
 - **Persistent Session Memory**: Session focus, idioms, and milestones are tracked in `.agents/memory/` across chats and compactions.
 - **Reproduction-First Bugfixes**: Defect fixes must include a reproducing test before or alongside implementation.
 - **Agile Trunk Dual-Tagging**: Substantive features receive SemVer tags (`vMAJOR.MINOR.PATCH`) paired with CalVer release tags (`YYYY.M.D.N`) on `main`.

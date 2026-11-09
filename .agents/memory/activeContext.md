@@ -1,29 +1,26 @@
 # Active Context
 
 ## Current Focus
-Polyglot Language Coding Invariants: Codifying unbreakable coding standards for TypeScript, Python (3.12+), and Go directly in canonical `AGENTS.md`, and providing deep scaffolding idioms in `component-authoring` references.
+Polyglot Language Coding Invariants: Feature completed, validated across test runner (12/12 passing) and security audit, released as `v1.1.0` / `2026.11.9.1`.
 
 ## Active Branch
-`feature/polyglot-coding-rulesets`
+`main`
 
 ## Recent Changes
-- Branch isolated from latest `main`.
-- Plan refined to adhere to Antigravity's consolidated rule architecture, eliminating pseudo-globbed `.agents/rules/*.md` files to avoid fragmentation and context bloat.
-- Codified always-on polyglot language invariants directly into `AGENTS.md` (Section 4):
-  - **TypeScript**: Strict typing (`noImplicitAny`, zero `any`), runtime boundary validation using existing project libraries or native type guards (zero unnecessary external deps), pure ESM, and floating promise prevention with `AbortSignal`.
-  - **Python (3.12+ Baseline)**: Modern typing (PEP 695 generics, PEP 604 unions), standard `pathlib.Path` and `logging`, zero mutable defaults, explicit exception chaining (`raise ... from err`), and `asyncio.TaskGroup` structured concurrency.
-  - **Go**: Immediate error checking and contextual wrapping (`%w`), `context.Context` propagation as first parameter, leak-free goroutine termination, small consumer-defined interfaces, and table-driven tests.
-- Created `.agents/skills/component-authoring/references/polyglot-idioms.md` with complete code templates (runtime type guards, `AbortController` timeouts, Python 3.12+ `TaskGroup` workers, Go table-driven tests).
-- Updated `component-authoring/SKILL.md` to reference `polyglot-idioms.md`.
-- Updated `.harness/test-runner.sh` with `test_polyglot_conventions_presence` and `test_modular_rules_syntax`.
-- Updated `.agents/memory/systemPatterns.md` documenting the Consolidated Polyglot Rule Architecture pattern.
-- Verified all 12 test assertions passing (`./manage.sh test all`) and clean codebase audit (`./manage.sh audit`).
+- Consolidated language coding invariants for TypeScript, Python (3.12+ baseline), and Go directly into canonical `AGENTS.md` Section 4.
+- Created `.agents/skills/component-authoring/references/polyglot-idioms.md` with complete implementation and test templates.
+- Updated `component-authoring/SKILL.md` and `README.md` to index polyglot standards.
+- Expanded `.harness/test-runner.sh` with `test_polyglot_conventions_presence` and `test_modular_rules_syntax` (12/12 tests passing).
+- Updated `CHANGELOG.md` with release milestone `[1.1.0] / [2026.11.9.1]`.
+- Synchronized memory bank files (`activeContext.md`, `systemPatterns.md`, `progress.md`).
+- Removed ephemeral planning artifact `plan_polyglot_coding_rulesets.md`.
 
-## Verification Status
-- Automated Test Suite: 12/12 passing (`./manage.sh test all`).
-- Codebase & Permission Audit: Clean (`./manage.sh audit`).
-- Git working tree: Clean on `feature/polyglot-coding-rulesets`.
+## Active Decisions
+- Polyglot rules codified directly in `AGENTS.md` adhering to Antigravity's consolidated rule architecture, eliminating pseudo-globbed `.agents/rules/*.md` files.
+- Extended implementation templates offloaded to `component-authoring` reference documents via progressive disclosure.
+- Python standard targets Python 3.12+ runtime (trailing 12 months from annual release; no legacy <3.12 compatibility).
+- TypeScript enforces runtime boundary validation using existing project libraries or native type guards without adding unvetted dependencies.
 
-## Immediate Next Steps (Pending User Review)
-- Pause at Mandatory Review Checkpoint.
-- Await user inspection, testing, and explicit approval before initiating `feature-completion` (updating manifests/CHANGELOG, merging to `main`, and presenting the release tagging packet).
+## Immediate Next Steps
+- Stand by for new feature requests, diagnostics, or architecture reviews.
+- When beginning a new task, follow `feature-initiation` and update this file with active focus.
