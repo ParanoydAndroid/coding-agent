@@ -43,7 +43,7 @@ When newly instantiated against any repository, orient yourself using the follow
 1. **`README.md`**: The authoritative reference for project purpose, repository structure, prerequisite runtimes, service interfaces, configuration paths, and core CLI commands.
 2. **`AGENTS.md` / `agent.md` (`.agents/rules/project-conventions.md`)**: Canonical behavioral instructions, engineering standards, and coding conventions. The root symlink ensures universal compatibility across multi-agent tooling.
 3. **`.agents/memory/`**: Persistent session memory bank (`activeContext.md`, `systemPatterns.md`, `progress.md`) maintaining task focus, architectural quirks, and milestones across session boundaries and context compactions.
-4. **`.agents/rules/`**: Glob-scoped language and manifest conventions (e.g. `shell-scripting.md` for `*.sh`, `containers-and-env.md` for `compose.yml`).
+4. **`.agents/rules/`**: Glob-scoped language and manifest conventions (`typescript.md` for `*.ts`/`*.tsx`, `python.md` for `*.py`, `go.md` for `*.go`, `shell-scripting.md` for `*.sh`, `containers-and-env.md` for `compose.yml`).
 5. **`.agents/artifacts/`**: Versioned directory for architecture specifications, design documents, and technical audits (see [`.agents/artifacts/architecture.md`](.agents/artifacts/architecture.md)). Read existing artifacts before proposing or executing work.
 6. **Configuration & Dependency Manifests**: Package manifests (`package.json`, `Cargo.toml`, `pyproject.toml`, `go.mod`, `compose.yml`) and configuration templates (`.env.example`).
 
@@ -89,6 +89,11 @@ When interacting with a user on a freshly cloned repository, or when establishin
   - Adhere strictly to the established language-specific formatting and linting conventions of the repository.
   - Keep functions focused and cohesive. Favor modular, composable functions over monolithic procedures.
   - Handle errors explicitly and defensively. Never suppress or ignore unexpected exceptions without explicit justification.
+- **Polyglot Language Invariants**:
+  - Detailed, glob-scoped language rules are codified under `.agents/rules/`:
+    - **TypeScript / TSX** ([`.agents/rules/typescript.md`](.agents/rules/typescript.md)): Strict typing (`noImplicitAny`, zero `any`), runtime boundary validation without unvetted external dependencies, pure ESM, and floating promise prevention.
+    - **Python** ([`.agents/rules/python.md`](.agents/rules/python.md)): Modern Python 3.12+ baseline (PEP 695 generics, PEP 604 unions), standard `pathlib.Path` and `logging`, zero mutable defaults, explicit exception chaining (`raise from`), and structured concurrency (`asyncio.TaskGroup`).
+    - **Go** ([`.agents/rules/go.md`](.agents/rules/go.md)): Immediate error checking and contextual wrapping (`%w`), `context.Context` propagation as the first parameter, leak-free goroutine lifecycles, small consumer-defined interfaces, and table-driven tests.
 - **Git Staging Hygiene and Atomic Commit Discipline**:
   - *Never Stage Blindly*: Never execute `git add .` or `git add -A` without first inspecting `git status -s` to verify no scratch files, secrets, or untracked artifacts are staged.
   - *Atomic Commits*: Each commit must encapsulate exactly one cohesive logical change.

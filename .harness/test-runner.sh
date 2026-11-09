@@ -301,7 +301,20 @@ test_ci_workflow_presence() {
 
 test_modular_rules_presence() {
   [[ -f "${REPO_DIR}/.agents/rules/shell-scripting.md" ]] && \
-  [[ -f "${REPO_DIR}/.agents/rules/containers-and-env.md" ]]
+  [[ -f "${REPO_DIR}/.agents/rules/containers-and-env.md" ]] && \
+  [[ -f "${REPO_DIR}/.agents/rules/typescript.md" ]] && \
+  [[ -f "${REPO_DIR}/.agents/rules/python.md" ]] && \
+  [[ -f "${REPO_DIR}/.agents/rules/go.md" ]]
+}
+
+test_modular_rules_syntax() {
+  local rule_file
+  for rule_file in "${REPO_DIR}/.agents/rules"/*.md; do
+    [[ -f "${rule_file}" ]] || continue
+    head -n 1 "${rule_file}" | grep -q "^---$" || return 1
+    grep -q "^trigger: " "${rule_file}" || return 1
+    grep -E -q "^(globs:|trigger: always_on)" "${rule_file}" || return 1
+  done
 }
 
 suite_conventions() {
@@ -315,6 +328,7 @@ suite_conventions() {
   run_test test_subagents_presence ".agents/subagents/ prompt directory exists"
   run_test test_memory_bank_presence ".agents/memory/ session memory bank exists and is populated"
   run_test test_modular_rules_presence ".agents/rules/ glob-scoped rules exist"
+  run_test test_modular_rules_syntax ".agents/rules/ YAML frontmatter and triggers are valid"
   run_test test_ci_workflow_presence ".github/workflows/ci.yml continuous integration workflow exists"
 }
 
