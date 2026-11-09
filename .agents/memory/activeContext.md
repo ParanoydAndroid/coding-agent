@@ -1,18 +1,22 @@
 # Active Context
 
 ## Current Focus
-Subagent Model Tiering & Unified Golden-Path Reviewer: consolidating reviewer personas into `principal-reviewer` (`Model: pro`), introducing `grep-worker` and `diff-worker` (`Model: flash_lite`), and codifying the Golden Path / Happy Path architectural principle.
+Polyglot Language Coding Rulesets: Codifying intelligence and coding standards for TypeScript, Python, and Go via glob-scoped modular rules in `.agents/rules/`, updating canonical onboarding and code style standards in `AGENTS.md`, and integrating verification into `.harness/test-runner.sh`.
+
+## Active Branch
+`feature/polyglot-coding-rulesets`
 
 ## Recent Changes
-- Consolidated `architect-critic` and `code-auditor` into unified `principal-reviewer.md` with explicit `Model: pro` and Golden Path / Happy Path preference.
-- Created `grep-worker.md` and `diff-worker.md` with `Model: flash_lite` for high-speed, cost-effective search and diff workloads.
-- Codified Subagent Model Tiering Protocol and Golden Path design bias in `AGENTS.md`.
-- Updated test runner invariant assertions to verify presence and integrity of all model-tiered subagent specifications.
+- Branch isolated from latest `main`.
+- Drafted initial architectural execution plan for polyglot coding rulesets (`plan_polyglot_coding_rulesets.md`).
+- Initiated Stage 2: Architectural Interrogation ("Grill-Me Gate") with user.
 
 ## Active Decisions
-- Subagent model selection follows strict tiering: `pro` for architectural planning and audit; `flash_lite` for search, grep, and diffs; `inherit`/`flash` for standard tasks.
-- Unified reviewer combines design-mode interrogation ("Grill-Me") with operational drift auditing under a shared Golden Path philosophy.
+- Rulesets partitioned into glob-triggered modular rule documents (`.agents/rules/typescript.md`, `.agents/rules/python.md`, `.agents/rules/go.md`) to preserve context window economy.
+- Base language invariants and references linked from root `AGENTS.md`.
+- Baseline automated test harness (`.harness/test-runner.sh`) updated to assert rule presence and format validity.
 
 ## Immediate Next Steps
-- Stand by for new feature requests, diagnostics, or architecture reviews.
-- When beginning a new task, follow `feature-initiation` and update this file with active focus.
+- Interrogate architectural trade-offs, glob definitions, formatting invariants, and testing hooks with the user.
+- Refine and finalize execution plan upon resolving interrogation queries.
+- Obtain explicit approval before proceeding to implementation.
