@@ -11,7 +11,7 @@ This repository adheres to [Semantic Versioning](https://semver.org/) paired wit
 - **Portable Communication & Anti-Slop Rule (`communication-and-style.md`)**: Created canonical `.agents/rules/communication-and-style.md` (`trigger: always_on`) codifying:
   - Persona & Tone: Direct, objective, concise, zero sycophancy, zero empty praise, zero apologies.
   - Interaction Invariants: Zero throat-clearing/preambles, zero bookends/sign-offs, zero prompt echoing, no unprompted code narration.
-  - Banned Lexical Corpus: Hard ban on promotional puffery (`seamless`, `robust`, `cutting-edge`, `revolutionary`, `production-grade`, `battle-tested`), synthetic connectors (`delve into`, `tapestry`, `beacon`, `testament`, `crucial`, `pivotal`, `furthermore`, `moreover`), binary contrast hooks, and decorative emojis in technical artifacts.
+  - Banned Lexical Corpus: Hard ban on promotional puffery and marketing buzzwords, synthetic transitional connectors, binary contrast hooks, and decorative emojis in technical artifacts per `.agents/rules/communication-and-style.md`.
   - Comment Intentionality: Explain *why*, never *what*; zero syntactic restatement; zero fabricated metrics.
 - **Portable Documentation Consistency Auditor Skill**: Ported and adapted `.agents/skills/doc-consistency-auditor/SKILL.md` to provide automated frontmatter verification, internal relative link audits, factual grounding against disk state, cross-document propagation checks, and regex anti-slop scans against the canonical banned vocabulary.
 - **Mechanical Anti-Slop Audit Gate in `manage.sh`**: Integrated automated prose anti-slop and promotional hyperbole detection into `./manage.sh audit`.
