@@ -1,25 +1,24 @@
 # Active Context
 
 ## Current Focus
-Polyglot Language Coding Invariants: Feature completed, validated across test runner (12/12 passing) and security audit, released as `v1.1.0` / `2026.11.9.1`.
+Baseline Maintenance: Anti-slop communication invariants, portable doc consistency auditor, and unified shell standards completed, verified across test runner (12/12 passing) and security audit, released as `v1.2.0` / `2026.11.10.1`.
 
 ## Active Branch
 `main`
 
 ## Recent Changes
-- Consolidated language coding invariants for TypeScript, Python (3.12+ baseline), and Go directly into canonical `AGENTS.md` Section 4.
-- Created `.agents/skills/component-authoring/references/polyglot-idioms.md` with complete implementation and test templates.
-- Updated `component-authoring/SKILL.md` and `README.md` to index polyglot standards.
-- Expanded `.harness/test-runner.sh` with `test_polyglot_conventions_presence` and `test_modular_rules_syntax` (12/12 tests passing).
-- Updated `CHANGELOG.md` with release milestone `[1.1.0] / [2026.11.9.1]`.
+- Codified canonical `.agents/rules/communication-and-style.md` (`trigger: always_on`) covering persona, anti-slop invariants, banned vocabulary, and comment intentionality.
+- Ported and generalized `.agents/skills/doc-consistency-auditor/SKILL.md` for automated link, factual grounding, and anti-slop verification.
+- Embedded automated prose anti-slop audit gate into `./manage.sh audit`.
+- Unified `.agents/rules/shell-scripting.md` with mandatory cleanup traps, error boundaries, and comment intentionality.
+- Fixed Antigravity rule frontmatter schema from list sequence (`globs: [...]`) to string (`glob: "**/*.sh"`).
+- Updated `CHANGELOG.md` with release milestone `[1.2.0] / [2026.11.10.1]`.
 - Synchronized memory bank files (`activeContext.md`, `systemPatterns.md`, `progress.md`).
-- Removed ephemeral planning artifact `plan_polyglot_coding_rulesets.md`.
 
 ## Active Decisions
-- Polyglot rules codified directly in `AGENTS.md` adhering to Antigravity's consolidated rule architecture, eliminating pseudo-globbed `.agents/rules/*.md` files.
-- Extended implementation templates offloaded to `component-authoring` reference documents via progressive disclosure.
-- Python standard targets Python 3.12+ runtime (trailing 12 months from annual release; no legacy <3.12 compatibility).
-- TypeScript enforces runtime boundary validation using existing project libraries or native type guards without adding unvetted dependencies.
+- Universal persona and style standards decoupled into `.agents/rules/communication-and-style.md` for clean 1:1 cross-repo synchronization.
+- Antigravity rule frontmatter requires `glob: "<pattern>"` as a string; list sequences trigger unmarshaling failures.
+- Comments must strictly explain *why*, never *what*.
 
 ## Immediate Next Steps
 - Stand by for new feature requests, diagnostics, or architecture reviews.

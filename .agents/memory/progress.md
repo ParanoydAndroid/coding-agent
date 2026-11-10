@@ -17,11 +17,16 @@
 - [x] Consolidated Polyglot Language Invariants (TypeScript, Python 3.12+, Go) in canonical `AGENTS.md`.
 - [x] Reference code templates and test patterns in `.agents/skills/component-authoring/references/polyglot-idioms.md`.
 - [x] Automated test runner expanded to 12 passing assertions verifying polyglot conventions and rule syntax.
+- [x] Canonical portable `.agents/rules/communication-and-style.md` rule enforcing brevity, zero preambles/bookends, and banned lexical corpus.
+- [x] Portable `.agents/skills/doc-consistency-auditor/` skill with automated link, factual grounding, and anti-slop verification.
+- [x] Automated anti-slop audit gate integrated into `./manage.sh audit`.
+- [x] Consolidated `.agents/rules/shell-scripting.md` with mandatory cleanup traps, error boundaries, and comment intentionality.
+- [x] Antigravity frontmatter schema compliance (`glob: "**/*.sh"` string syntax).
 
 ## Verification Status
 - Automated test suite: 12/12 passing (`./manage.sh test all`).
 - Codebase drift and permission audit: Clean (`./manage.sh audit`).
-- Active releases: `v1.0.0`, `2026.11.4.1`, `2026.11.4.2`, `2026.11.5.1`, `2026.11.5.2`, `2026.11.6.1`, `v1.1.0`, `2026.11.9.1`.
+- Active releases: `v1.0.0`, `2026.11.4.1`, `2026.11.4.2`, `2026.11.5.1`, `2026.11.5.2`, `2026.11.6.1`, `v1.1.0`, `2026.11.9.1`, `v1.2.0`, `2026.11.10.1`.
 
 ## Known Issues / Backlog
 - None.

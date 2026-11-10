@@ -219,6 +219,19 @@ cmd_audit() {
     log_success "All repository symlinks resolve cleanly"
   fi
 
+  # 4. Anti-slop and prose hygiene audit
+  log_info "Auditing documentation and rules for AI slop and banned hyperbole..."
+  local banned_slop="seamless|robust|cutting-edge|revolutionary|production-grade|battle-tested|pristine|elegant|ultimate|bulletproof|delve|tapestry|beacon|testament|furthermore|moreover"
+  local found_slop
+  found_slop="$(grep -riE "${banned_slop}" "${REPO_DIR}/README.md" "${REPO_DIR}/CHANGELOG.md" "${REPO_DIR}/.agents/artifacts" 2>/dev/null || true)"
+  if [[ -n "${found_slop}" ]]; then
+    log_error "Banned AI slop or promotional hyperbole detected in documentation:"
+    echo "${found_slop}" | head -n 10 >&2
+    ((issues_found++)) || true
+  else
+    log_success "Documentation and prose clean (zero AI slop detected)"
+  fi
+
   if [[ "${issues_found}" -eq 0 ]]; then
     log_success "Audit completed: System healthy."
     return 0
