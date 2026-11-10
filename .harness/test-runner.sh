@@ -310,7 +310,7 @@ test_modular_rules_syntax() {
     [[ -f "${rule_file}" ]] || continue
     head -n 1 "${rule_file}" | grep -q "^---$" || return 1
     grep -q "^trigger: " "${rule_file}" || return 1
-    grep -E -q "^(globs:|trigger: always_on)" "${rule_file}" || return 1
+    grep -E -q "^(glob:|globs:|trigger: always_on)" "${rule_file}" || return 1
   done
 }
 

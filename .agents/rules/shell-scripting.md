@@ -1,9 +1,6 @@
 ---
 trigger: glob
-globs:
-  - "*.sh"
-  - ".harness/*.sh"
-  - ".scripts/*.sh"
+glob: "**/*.sh"
 ---
 
 # Shell Scripting Standards and Conventions

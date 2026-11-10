@@ -1,10 +1,6 @@
 ---
 trigger: glob
-globs:
-  - "*compose*.yml"
-  - "*compose*.yaml"
-  - "Dockerfile*"
-  - ".env*"
+glob: "*compose*.{yml,yaml}"
 ---
 
 # Containers and Environment Configuration Standards
