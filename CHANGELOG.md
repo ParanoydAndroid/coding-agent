@@ -5,6 +5,24 @@ This repository adheres to [Semantic Versioning](https://semver.org/) paired wit
 
 ---
 
+## [1.2.0] / [2026.11.10.1] - Anti-Slop Communication Invariants, Portable Doc Consistency Auditor, and Unified Shell Standards (2026-11-10)
+
+### Added
+- **Portable Communication & Anti-Slop Rule (`communication-and-style.md`)**: Created canonical `.agents/rules/communication-and-style.md` (`trigger: always_on`) codifying:
+  - Persona & Tone: Direct, objective, concise, zero sycophancy, zero empty praise, zero apologies.
+  - Interaction Invariants: Zero throat-clearing/preambles, zero bookends/sign-offs, zero prompt echoing, no unprompted code narration.
+  - Banned Lexical Corpus: Hard ban on promotional puffery (`seamless`, `robust`, `cutting-edge`, `revolutionary`, `production-grade`, `battle-tested`), synthetic connectors (`delve into`, `tapestry`, `beacon`, `testament`, `crucial`, `pivotal`, `furthermore`, `moreover`), binary contrast hooks, and decorative emojis in technical artifacts.
+  - Comment Intentionality: Explain *why*, never *what*; zero syntactic restatement; zero fabricated metrics.
+- **Portable Documentation Consistency Auditor Skill**: Ported and adapted `.agents/skills/doc-consistency-auditor/SKILL.md` to provide automated frontmatter verification, internal relative link audits, factual grounding against disk state, cross-document propagation checks, and regex anti-slop scans against the canonical banned vocabulary.
+- **Mechanical Anti-Slop Audit Gate in `manage.sh`**: Integrated automated prose anti-slop and promotional hyperbole detection into `./manage.sh audit`.
+
+### Changed
+- **Unified Shell Scripting Standards (`shell-scripting.md`)**: Consolidated `.agents/rules/shell-scripting.md` to incorporate cleanup traps (`trap ... EXIT INT TERM`) and comment intentionality referencing `communication-and-style.md`.
+- **Frontmatter Glob Schema Alignment**: Fixed frontmatter schema in `.agents/rules/shell-scripting.md` and `.agents/rules/containers-and-env.md` from list sequences (`globs: [...]`) to Antigravity-compliant strings (`glob: "**/*.sh"` and `glob: "*compose*.{yml,yaml}"`).
+- **Core Conventions Update**: Updated `AGENTS.md` Section 1 and Section 4 to index and enforce `.agents/rules/communication-and-style.md`.
+
+---
+
 ## [1.1.0] / [2026.11.9.1] - Polyglot Language Invariants and Component Templates (2026-11-09)
 
 ### Added
