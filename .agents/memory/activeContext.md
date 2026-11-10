@@ -1,26 +1,22 @@
 # Active Context
 
 ## Current Focus
-Polyglot Language Coding Invariants: Feature completed, validated across test runner (12/12 passing) and security audit, released as `v1.1.0` / `2026.11.9.1`.
+Anti-Slop Communication Invariants & Portable Document Audit: Adding canonical `.agents/rules/communication-and-style.md`, porting `doc-consistency-auditor` skill, updating `AGENTS.md`, and adding mechanical anti-slop audit gate to `manage.sh`.
 
 ## Active Branch
-`main`
+`feature/anti-slop-communication-rules`
 
 ## Recent Changes
-- Consolidated language coding invariants for TypeScript, Python (3.12+ baseline), and Go directly into canonical `AGENTS.md` Section 4.
-- Created `.agents/skills/component-authoring/references/polyglot-idioms.md` with complete implementation and test templates.
-- Updated `component-authoring/SKILL.md` and `README.md` to index polyglot standards.
-- Expanded `.harness/test-runner.sh` with `test_polyglot_conventions_presence` and `test_modular_rules_syntax` (12/12 tests passing).
-- Updated `CHANGELOG.md` with release milestone `[1.1.0] / [2026.11.9.1]`.
-- Synchronized memory bank files (`activeContext.md`, `systemPatterns.md`, `progress.md`).
-- Removed ephemeral planning artifact `plan_polyglot_coding_rulesets.md`.
+- Initialized branch `feature/anti-slop-communication-rules` from `main`.
+- Plan approved for upstream harness update and downstream homelab synchronization.
 
 ## Active Decisions
-- Polyglot rules codified directly in `AGENTS.md` adhering to Antigravity's consolidated rule architecture, eliminating pseudo-globbed `.agents/rules/*.md` files.
-- Extended implementation templates offloaded to `component-authoring` reference documents via progressive disclosure.
-- Python standard targets Python 3.12+ runtime (trailing 12 months from annual release; no legacy <3.12 compatibility).
-- TypeScript enforces runtime boundary validation using existing project libraries or native type guards without adding unvetted dependencies.
+- Codify unified persona, anti-slop communication invariants, banned lexical corpus, and code comment intentionality in portable `.agents/rules/communication-and-style.md` (`trigger: always_on`).
+- Port `doc-consistency-auditor` skill from `home-config` to `coding-agent` as a generalized documentation auditor referencing the unified anti-slop registry.
+- Add deterministic regex anti-slop check to `manage.sh audit`.
 
 ## Immediate Next Steps
-- Stand by for new feature requests, diagnostics, or architecture reviews.
-- When beginning a new task, follow `feature-initiation` and update this file with active focus.
+1. Create `.agents/rules/communication-and-style.md`.
+2. Port and adapt `.agents/skills/doc-consistency-auditor/SKILL.md`.
+3. Update `AGENTS.md` and `manage.sh`.
+4. Validate with `./manage.sh test all` and `./manage.sh audit`.
